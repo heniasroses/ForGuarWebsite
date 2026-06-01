@@ -36,11 +36,6 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-.far.fa-envelope::hover {
-  color: #34ff84;
-  transform: scale(1.1);
-}
-
 envelope:hover {
   color: #34ff84;
   transform: scale(1.1);
