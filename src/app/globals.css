@@ -1,4 +1,12 @@
 :root {
+  --font-inter: "Inter", sans-serif;
+}
+
+body {
+  font-family: var(--font-inter);
+}
+
+:root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -46,4 +54,22 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+.navbar {
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+}
+
+.navbar .nav-link {
+  color: #ffffff !important;
+}
+
+.navbar .nav-link.active {
+  color: #90FF67 !important;
+}
+
+.navbar .nav-link:hover {
+  color: #90FF67 !important;
+  transition: 0.2s ease;
 }

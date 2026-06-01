@@ -1,0 +1,1208 @@
+
+
+.playButton {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.play-btn {
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+  padding: 14px 45px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transform: skew(-20deg);
+  transition: 0.25s ease;
+  cursor: pointer;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.play-btn span {
+  transform: skew(20deg);
+  display: inline-block;
+}
+
+.play-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: skew(-20deg) scale(1.05);
+  color: white;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.far.fa-envelope::hover {
+  color: #34ff84;
+  transform: scale(1.1);
+}
+
+envelope:hover {
+  color: #34ff84;
+  transform: scale(1.1);
+}
+
+.envelope:hover {
+  color: #81E25E;
+  transform: scale(1.1);
+}
+
+.fa.fa-youtube-play:hover {
+  color: #81E25E;
+  transform: scale(1.1);
+}
+
+.fab.fa-facebook-f:hover {
+  color: #81E25E;
+  transform: scale(1.1);
+}
+
+.far.fa-star:hover {
+  color: #81E25E;
+  transform: scale(1.1);
+}
+
+.contact-box {
+  background: #181818;
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 0 40px rgba(0,0,0,.35);
+  width: 100%;
+  max-width: 550px;
+  margin: auto;
+}
+
+.row {
+  width: 100%;
+}
+
+.meet {
+  padding-top: 10px;
+  font-size: 60px;
+  padding-bottom: 20px;
+}
+
+/* =========================
+   CAROUSEL WRAPPER
+========================= */
+.carouselSection {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* =========================
+   CAROUSEL CARD
+========================= */
+.guardian-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+}
+
+/* =========================
+   IMAGE SIDE
+========================= */
+.guardian-image {
+  flex: 0 0 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.guardian-img {
+  width: clamp(200px, 28vw, 320px);
+  height: auto;
+}
+
+/* =========================
+   TEXT SIDE
+========================= */
+.guardian-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+/* =========================
+   TEXT STYLES
+========================= */
+.guardian-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  margin-top: -30px;
+}
+
+.line{
+  width: 50%;
+  align-self: center;
+}
+
+.guardian-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  padding-bottom: 40px;
+}
+
+.guardian-specie {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: left;
+  margin: 0;
+}
+
+.guardian-desc {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: left;
+  margin: 0;
+}
+
+/* =========================
+   NAV BUTTONS (CUSTOM ARROWS)
+========================= */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.nav-btn img {
+  width: 70px;
+  transition: 0.2s ease;
+}
+
+.nav-btn:hover img {
+  transform: scale(1.1);
+}
+
+/* LEFT */
+.nav-btn.left {
+  left: 10px;
+  padding-left: 50px;
+  padding-top: 100px;
+}
+
+/* RIGHT */
+.nav-btn.right {
+  right: 10px;
+  padding-right: 50px;
+  padding-top: 100px;
+}
+
+/* =========================
+   FADE + SLIGHT SLIDE ANIMATION
+========================= */
+
+.animate-card {
+  animation: fadeSlide 0.45s ease-in-out;
+}
+
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.wildlife-almanc {
+  padding: 0;
+  background: #111111;
+  min-height: 10vh;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  font-family: 'Inter';
+  margin-top: -1px;
+  z-index: 4;
+}
+
+.wildlife {
+  font-size: 60px;
+  margin-top: -20px;
+}
+
+.book-div {
+  width: 100%;
+
+}
+
+.almanac {
+  max-width: 65%;
+  margin-bottom: -130px;
+}
+
+.art-container {
+  padding: 0;
+  background: url("/img/GameOptionsScreen%201.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  min-height: 105vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding-top: clamp(80px, 12vh, 180px);
+  position: relative;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  display: none;
+}
+
+.carousel-item {
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.footerParagraph {
+  max-width: 500px;
+  line-height: 1;
+  margin-top: 20px;
+  font-family: 'Inter';
+  color: #ffff;
+}
+
+/* FIX = DI KITA YUNG ICONS */
+
+.footerIcons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 120px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.footer-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.footer-icon:hover {
+  transform: scale(1.1);
+}
+
+/* This is the Text Logo */
+
+.footerLogo2{
+  width: 250px;
+  height: 36px;
+}
+
+.play4freeSection {
+  padding: 0px;
+  padding-top: 60px;
+}
+
+.trailer {
+  padding: 0;
+  background: url("/img/TrailerBG.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  min-height: 115vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding-top: clamp(80px, 12vh, 180px);
+  margin-top: -60px;
+  position: relative;
+  z-index: 2;
+}
+
+.meetGuardians {
+  padding: 0;
+  background: url("/img/MeetGuardians.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  min-height: 125vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding-top: clamp(80px, 25vh, 180px);
+  margin-top: -65px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-family: 'Inter';
+}
+
+.Footer {
+  background: #111111;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  font-family: 'Inter';
+}
+
+.LandingScreen {
+  background: url("/img/MainLoadingScreen.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 100vh;
+  background-position: center;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 18vh;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logo-wrapper {
+  margin-top: -68px;
+  text-align: center;
+}
+
+.trailer-wrapper {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 55px;
+}
+
+.video-box {
+  width: 700px;
+  max-width: 90vw;
+  aspect-ratio: 16 / 9;
+}
+
+.text-box {
+  width: clamp(260px, 35vw, 400px);
+  padding: 25px;
+  background: #18191A;
+  border: 0.5px solid white;
+  color: white;
+  border-radius: 10px;
+}
+
+.trailerText {
+  font-size: 4.5vh;
+  color: #90FF67;
+  font-weight: 650;
+}
+
+.trailerParag {
+  font-family: 'Inter';
+}
+
+/* This is the Rose LOGO*/
+
+.footerLogo {
+  width: 130px;
+  margin-top: -85px;
+  margin-bottom: 30px;
+  z-index: 20;
+}
+
+.guardian-card {
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+.guardian-info {
+  overflow: visible;
+}
+
+.guardian-specie,
+.guardian-desc {
+  text-align: left;
+}
+
+.aboutUs-container{
+  padding: 0;
+  background: url("/img/AboutUsBG.png");
+  background-size: cover;
+  min-height: 110vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center; /* vertical center */
+  margin-left: -3px;
+}
+
+.aboutUs-content {
+  max-width: 310px;
+  margin-left: 4.6rem; /* distance from left edge */
+  text-align: left;
+  color: #ffff;
+}
+
+.aboutUs-title{
+  margin-top: 85px;
+  font-weight: 645;
+  font-size: 31.5px;
+  font-family: 'Inter';
+}
+
+.aboutUs-text {
+  line-height: 0.85;
+  margin-top: 8px;
+  font-size: 13.5px;
+  font-family: 'Inter';
+  font-weight: 300;
+}
+
+.AboutUstrailer{
+  padding: 0;
+  background: url("/img/TrailerBG.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  min-height: 115vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding-top: clamp(80px, 12vh, 180px);
+  position: relative;
+  margin-top: -60px;
+  z-index: 2;
+}
+
+.Team-container {
+  padding: 0;
+  background: #1D1C20;
+  min-height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter';
+}
+
+.team-row {
+  width: 90%;
+  max-width: 1400px;
+  margin-top: -70px;
+  z-index: 5;
+  margin-bottom: 80px;
+}
+
+.team-member {
+  text-align: center;
+  color: #ffffff;
+  padding: 20px;
+}
+
+.team-image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10%;
+  margin-bottom: 1rem;
+}
+
+.team-member h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #ffffff;
+}
+
+.team-roles {
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+.team-roles span {
+  display: block;
+  font-size: 12px;
+  line-height: 0.9;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.contactUsContainer {
+  min-height: 100vh;
+  background: url("/img/ContactUsBG.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  font-family: 'Inter';
+}
+
+/* MAIN LAYOUT */
+.contactUsRow {
+  display: flex;
+  gap: 60px;
+  width: 100%;
+  max-width: 1200px;
+  align-items: center;
+}
+
+/* LEFT SIDE */
+.contactLeft {
+  flex: 1;
+  color: #ffffff;
+}
+
+.contactLeft h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.contactLeft p {
+  margin-bottom: 30px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.contactIcons {
+  display: flex;
+  gap: 35px;
+}
+
+.contactIcons img {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+/* RIGHT SIDE CARD */
+.contactRight {
+  flex: 1;
+  background: #181818;
+  padding: 30px;
+  border-radius: 8%;
+  color: #ffffff;
+}
+
+/* FORM */
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* FIRST + LAST NAME ROW */
+.rowTwoInputs {
+  display: flex;
+  gap: 20px;
+}
+
+.rowTwoInputs div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.fullInput {
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+textarea {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 12px;
+  outline: none;
+}
+
+/* TEXTAREA SIZE */
+textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+/* BUTTON */
+.buttonContact {
+  background: #81E25E;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #000000;
+  width: 140px;
+  align-self: flex-end;
+  margin-right: 10px;
+}
+
+.forestLogContainer {
+  padding: 0;
+  background: #181818;
+  font-family: 'Inter';
+}
+
+.forestLogHero {
+  min-height: 80vh;
+  background: url("/img/ForestLogBanner.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  display: flex;
+  align-items: flex-end;
+}
+
+.heroText {
+  color: white;
+
+  margin-left: 35px;
+  margin-bottom: 70px;
+  font-family: 'Inter';
+}
+
+.heroText h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.heroText p {
+  margin-top: -10px;
+  font-size: 1.2rem;
+}
+
+.forestLogContent {
+  background: #181818;
+  padding: 60px 80px;
+  font-family: 'Inter';
+}
+
+.forestLogFilters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: -80px;
+  margin-bottom: 40px;
+  font-family: 'Inter';
+}
+
+.leftFilters {
+  display: flex;
+  gap: 15px;
+}
+
+.ForGuarButtons {
+  background: #213D22;
+  color: white;
+
+  border: white 0.5px solid;
+
+  padding: 5px 30px;
+
+  border-radius: 25px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+  z-index: 5;
+}
+
+.ForGuarButtons:hover {
+  opacity: 0.8;
+}
+
+.logsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.forestLogCard {
+  background: #2E322E;
+  min-width: 0;
+
+  border-radius: 5px;
+
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 250px; /* adjust if needed */
+  width: 350px;
+  overflow: hidden;
+}
+
+.forestLogCard h2 {
+  color: #90FF67;
+  font-family: 'Inter';
+  line-height: 1;
+  font-size: 1.3rem;
+  font-weight: 600;
+
+  text-align: left;
+
+  margin-bottom: 10px;
+  overflow-wrap: break-word;
+}
+
+.author {
+  color: white;
+
+  font-weight: bold;
+
+  text-align: left;
+
+  margin-bottom: 15px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.content {
+  color: white;
+  text-align: left;
+  line-height: 1.6;
+
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.viewLogButton {
+  margin-top: auto;
+
+  align-self: center;
+
+  background: #18191A;
+
+  color: white;
+
+  border: 1px solid white;
+
+  border-radius: 25px;
+
+  padding: 8px 24px;
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+}
+
+.createLogButton {
+  background: #192B17;
+  color: #90FF67;
+  font-weight: bold;
+
+  border: white 0.5px solid;
+  padding: 5px 34px;
+
+  border-radius: 25px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+  z-index: 5;
+}
+
+.createLogButton:hover {
+  opacity: 0.8;
+}
+
+.linkZ {
+  z-index: 5;
+}
+
+.createLogPage {
+  font-family: 'Inter';
+  min-height: 100vh;
+}
+
+/* BACKGROUND */
+.createLogBG {
+  min-height: 100vh;
+  background: url("/img/CreateLogBG.png");
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+}
+
+/* CARD */
+.createLogCard {
+  width: 850px;
+  background: #181818;
+  border-radius: 20px;
+  margin-top: 80px;
+  padding: 50px;
+  color: white;
+  font-family: 'Inter';
+}
+
+/* TITLE */
+.createLogCard h1 {
+  text-align: center;
+  color: #90FF67;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  font-family: 'Inter';
+  font-weight: 600;
+}
+
+/* FIELDS */
+.field {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 18px;
+}
+
+.field label {
+  margin-bottom: 8px;
+}
+
+/* INPUTS */
+.field input,
+.field textarea {
+  background: white;
+
+  border: none;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  color: black;
+}
+
+/* TEXTAREA SIZE */
+.field textarea {
+  min-height: 120px;
+}
+
+/* CATEGORY */
+.categoryRow {
+  display: flex;
+  justify-content: flex-start;
+  gap: 40px;
+
+  margin-top: 8px;
+  margin-left: 10px;
+}
+
+.categoryRow label {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+
+  color: white;
+}
+
+.categoryRow input[type="checkbox"] {
+  accent-color: #81E25E;
+  transform: scale(3);
+  cursor: pointer;
+  
+}
+
+/* BUTTON COLUMN */
+.buttonColumn {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+/* CANCEL */
+.cancelBtn {
+  background: #2F2F2F;
+
+  color: white;
+
+  border: none;
+
+  padding: 12px;
+
+  border-radius: 15px;
+
+  cursor: pointer;
+}
+
+/* SUBMIT */
+.submitBtn {
+  background: #81E25E;
+
+  color: #000;
+
+  border: none;
+
+  padding: 12px;
+
+  border-radius: 15px;
+
+  cursor: pointer;
+}
+
+.authContainer {
+  background: #E6EBE8;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Inter';
+}
+
+/* wrapper to stack rose + box */
+.authWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ROSE IMAGE */
+.authRose {
+  width: 80px;
+  margin-bottom: 10px;
+  padding-top: 30px;
+}
+
+/* LOGIN BOX */
+.authBox {
+  width: 550px;
+  height: auto;
+
+  background: #FFFFFF;
+  border-radius: 20px;
+
+  padding: 30px;
+  font-family: 'Inter';
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.2),
+    inset 0 0 10px rgba(0,0,0,0.05);
+
+  margin-bottom: 50px;
+}
+
+/* TITLE */
+.authBox h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #213D22;
+  font-weight: 700;
+}
+
+/* FIELD */
+.authField {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 15px;
+}
+
+.authField label {
+  margin-bottom: 5px;
+  color: #213D22;
+  font-weight: 500;
+}
+
+/* INPUTS */
+.authField input {
+  padding: 10px;
+
+  border-radius: 10px;
+  border: 1px solid #ccc;
+
+  outline: none;
+}
+
+/* LOGIN BUTTON */
+.loginBtn {
+  width: 100%;
+  margin-top: 10px;
+
+  padding: 12px;
+
+  background: #213D22;
+  color: white;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-weight: bold;
+}
+
+/* SIGNUP TEXT */
+.signupText {
+  text-align: center;
+  margin-top: 15px;
+
+  font-size: 0.9rem;
+  color: #213D22;
+  margin-bottom: -10px;
+}
+
+.signupText span {
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.adminContainer {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Inter';
+}
+
+/* LEFT SIDEBAR */
+.adminSidebar {
+  width: 200px;
+  background: #FFFFFF;
+  color: #213D22;
+
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  border-right: 1px solid #ddd;
+  padding-top: 90px;
+}
+
+.adminSidebar h3 {
+  cursor: pointer;
+  color: #213D22;
+}
+
+/* MAIN AREA */
+.adminMain {
+  flex: 1;
+  background: #E6EBE8;
+  padding: 60px;
+}
+
+/* GRID */
+.adminGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* CARD */
+.adminCard {
+  background: #FFFFFF;
+  border-radius: 10px;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+/* TEXT */
+.adminCard h2 {
+  color: #1A3417;
+  text-align: left;
+  font-size: 1.2rem;
+
+  word-break: break-word;
+}
+
+.adminUser {
+  font-weight: bold;
+  text-align: left;
+}
+
+.adminCategory {
+  font-size: 0.85rem;
+  color: gray;
+  text-align: left;
+}
+
+.adminContent {
+  margin-top: 10px;
+  text-align: left;
+
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* BUTTONS */
+.adminButtons {
+  margin-top: auto;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.viewBtn {
+  flex: 1;
+
+  background: #213D22;
+  color: white;
+
+  border: none;
+  border-radius: 20px;
+
+  padding: 8px;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  flex: 1;
+
+  background: #B51F1F;
+  color: white;
+
+  border: none;
+  border-radius: 20px;
+
+  padding: 8px;
+  cursor: pointer;
+}
