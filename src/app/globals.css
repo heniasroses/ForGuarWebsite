@@ -62,14 +62,16 @@ a {
 }
 
 .navbar .nav-link {
-  color: #ffffff !important;
-}
-
-.navbar .nav-link.active {
-  color: #90FF67 !important;
+  color: white !important;
 }
 
 .navbar .nav-link:hover {
   color: #90FF67 !important;
   transition: 0.2s ease;
+}
+
+/* ACTIVE TEXT */
+.active-text {
+  color: #90FF67 !important;
+  font-weight: 600;
 }

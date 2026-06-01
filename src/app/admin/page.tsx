@@ -93,23 +93,23 @@ export default function AdminPage() {
           {/* FILTER BUTTONS */}
           <div className="forestLogFilters">
 
-            <div className="leftFilters">
+            <div className="leftFilters AdminForumFilter">
               <button
-                className="ForGuarButtons"
+                className="ForGuarButtons AdminForumFilterBtn"
                 onClick={() => setFilter("All Topics")}
               >
                 All Topics
               </button>
 
               <button
-                className="ForGuarButtons"
+                className="ForGuarButtons AdminForumFilterBtn"
                 onClick={() => setFilter("Reviews")}
               >
                 Reviews
               </button>
 
               <button
-                className="ForGuarButtons"
+                className="ForGuarButtons AdminForumFilterBtn"
                 onClick={() =>
                   setFilter("Gameplay Strategy and Tips")
                 }

@@ -46,6 +46,8 @@ envelope:hover {
   transform: scale(1.1);
 }
 
+/*
+
 .fa.fa-youtube-play:hover {
   color: #81E25E;
   transform: scale(1.1);
@@ -60,6 +62,8 @@ envelope:hover {
   color: #81E25E;
   transform: scale(1.1);
 }
+
+*/
 
 .contact-box {
   background: #181818;
@@ -1200,4 +1204,16 @@ textarea {
 
   padding: 8px;
   cursor: pointer;
+}
+
+.AdminForumFilter{
+  padding-top: 120px;
+}
+
+.AdminForumFilterBtn{
+  background: transparent;
+}
+
+.AdminForumFilterBtn:hover {
+  background: #213D22;
 }
