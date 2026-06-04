@@ -1,4 +1,6 @@
-
+* {
+  box-sizing: border-box;
+}
 
 .playButton {
   position: absolute;
@@ -9,16 +11,26 @@
 
 .play-btn {
   background: rgba(0, 0, 0, 0.55);
+
   border: none;
-  padding: 14px 45px;
+
+  padding: clamp(10px, 2vw, 14px)
+           clamp(25px, 5vw, 45px);
+
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+
   transform: skew(-20deg);
-  transition: 0.25s ease;
+
   cursor: pointer;
+
   color: white;
-  font-size: 1.2rem;
+
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+
+  transition: transform 0.25s ease, background 0.25s ease;
+  will-change: transform;
 }
 
 .play-btn span {
@@ -28,8 +40,69 @@
 
 .play-btn:hover {
   background: rgba(0, 0, 0, 0.85);
-  transform: skew(-20deg) scale(1.05);
+  transform: skew(-20deg) scale(1.05) translateY(-3px);
   color: white;
+  box-shadow: 0 0 18px rgba(145, 255, 103, 0.35);
+}
+
+.play-btn:active {
+  transform: skew(-20deg) scale(0.98);
+}
+
+/* BUTTON ANIMATION */
+
+@keyframes floatBtn {
+  0% {
+    transform: skew(-20deg) translateY(0px);
+  }
+  50% {
+    transform: skew(-20deg) translateY(-3px);
+  }
+  100% {
+    transform: skew(-20deg) translateY(0px);
+  }
+}
+
+.play-btn {
+  animation: floatBtn 3s ease-in-out infinite;
+}
+
+/* LOGO ANIMATION */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-wrapper {
+  animation: fadeUp 0.8s ease-out;
+}
+
+@media (max-width: 768px) {
+
+  .LandingScreen {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .logo-wrapper img {
+    width: 85% !important;
+    max-width: 350px;
+  }
+
+}
+
+@media (min-width: 1024px) {
+  .LandingScreen {
+    justify-content: center;
+    padding-bottom: 10vh;
+  }
 }
 
 body::-webkit-scrollbar {
@@ -284,8 +357,6 @@ envelope:hover {
   color: #ffff;
 }
 
-/* FIX = DI KITA YUNG ICONS */
-
 .footerIcons {
   display: flex;
   justify-content: center;
@@ -317,6 +388,8 @@ envelope:hover {
 .play4freeSection {
   padding: 0px;
   padding-top: 60px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .trailer {
@@ -369,19 +442,23 @@ envelope:hover {
   background: url("/img/MainLoadingScreen.png");
   background-size: cover;
   background-repeat: no-repeat;
-  position: relative;
-  min-height: 100vh;
   background-position: center;
+
+  min-height: 100vh;
+
   display: flex;
-  justify-content: flex-start;
-  padding-top: 18vh;
-  align-items: center;
   flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
 }
 
 .logo-wrapper {
-  margin-top: -68px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .trailer-wrapper {
@@ -447,7 +524,7 @@ envelope:hover {
   background: url("/img/AboutUsBG.png");
   background-size: cover;
   min-height: 110vh;
-  min-width: 100vw;
+  min-width: 100%;
   display: flex;
   align-items: center; /* vertical center */
   margin-left: -3px;
@@ -1222,4 +1299,29 @@ textarea {
 
 .AdminForumFilterBtn:hover {
   background: #213D22;
+}
+
+/* =========================
+   GLOBAL MOBILE OVERFLOW FIX
+========================= */
+
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100%;
+}
+
+/* prevents any element from pushing layout sideways */
+* {
+  box-sizing: border-box;
+}
+
+/* Fix Bootstrap container overflow */
+.container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* HARD SAFETY NET */
+body {
+  position: relative;
 }

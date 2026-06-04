@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const isActive = (path: string) => pathname === path;
 
@@ -48,8 +50,18 @@ export default function Navbar() {
       <div className="container-fluid">
 
         <img src="/img/LOGO.png" width="94" height="39" alt="Logo" />
+        <button
+          className="mobileMenuButton"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
 
-        <div className="collapse navbar-collapse" id="navcol-1">
+        <div
+            className={`navbar-collapse-custom ${
+              menuOpen ? "show-menu" : ""
+            }`}
+          >
           <ul className="navbar-nav ms-auto">
 
             <li className="nav-item">

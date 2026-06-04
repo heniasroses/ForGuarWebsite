@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <div className="container-fluid play4freeSection">
+    <div className="play4freeSection">
       <div className="LandingScreen">
         <div className="logo-wrapper">
           <img
