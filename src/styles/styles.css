@@ -98,6 +98,39 @@
 
 }
 
+/* =========================
+   MOBILE NAVBAR FIX
+========================= */
+
+@media (max-width: 768px) {
+
+  /* push everything away from screen edges */
+  .navbar .container-fluid {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* fix hamburger button spacing */
+  .navbar-toggler {
+    margin-right: 8px;
+  }
+
+  /* navbar links spacing */
+  .navbar-nav {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .nav-item {
+    margin: 10px 0;
+  }
+
+  .nav-link {
+    padding-left: 6px;
+  }
+}
+
 @media (min-width: 1024px) {
   .LandingScreen {
     justify-content: center;
