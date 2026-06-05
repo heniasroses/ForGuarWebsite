@@ -274,9 +274,6 @@ envelope:hover {
 }
 
 @media (max-width: 768px) {
-
-
-
   .guardian-card {
     flex-direction: column;
     align-items: center;
@@ -291,6 +288,7 @@ envelope:hover {
 
   .guardian-info {
     align-items: center;
+    padding-top: 10px;
   }
 
   .guardian-specie,
@@ -300,6 +298,7 @@ envelope:hover {
 
   .line {
     align-self: center;
+    padding-top: 10px;
   }
 
   .carouselSection {
@@ -307,10 +306,19 @@ envelope:hover {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
-}
 
-.swipe-hint {
-  display: none;
+  .meet{
+    padding-bottom: 0px;
+  }
+
+  .nav-bottom {
+    padding-bottom: 60px;
+  }
+
+  .guardian-title {
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+  }
 }
 
 .carouselTrack {
@@ -408,6 +416,40 @@ envelope:hover {
 
 .nav-right {
   right: 40px;
+}
+
+@media (max-width: 768px) {
+  .guardian-card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .guardian-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .guardian-img {
+    width: clamp(160px, 55vw, 240px);
+    height: auto;
+    padding-bottom: 10px;
+  }
+
+  .guardian-info {
+    align-items: center;
+    text-align: center;
+  }
+
+  .guardian-specie,
+  .guardian-desc {
+    text-align: center;
+  }
 }
 
 /* MOBILE BOTTOM ARROWS */
