@@ -674,7 +674,7 @@ envelope:hover {
   /* MAIN WRAPPER */
   .trailer-wrapper {
     display: flex;
-    align-items: stretch; /* IMPORTANT: makes both equal height */
+    align-items: stretch;
     justify-content: center;
     gap: clamp(30px, 4vw, 80px);
     padding: 0 clamp(20px, 5vw, 120px);

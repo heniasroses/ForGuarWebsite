@@ -6,7 +6,7 @@ export default function Trailer() {
           <iframe
             className="aspect-ratio-16x9 w-100"
             allowFullScreen
-            src="https://www.youtube.com/embed/jfLmLEfiHYw"
+            src="https://www.youtube.com/embed/BeYhRJH9Ozo"
           />
         </div>
 
