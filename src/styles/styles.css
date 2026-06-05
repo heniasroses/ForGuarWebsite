@@ -362,8 +362,57 @@ envelope:hover {
   }
 }
 
+.animate-card {
+  animation: fadeSlide 0.45s ease-in-out;
+}
+
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =========================
+   NAVIGATION BUTTONS
+========================= */
+
+/* DESKTOP SIDE ARROWS */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.nav-arrow img {
+  width: 70px;
+  transition: 0.2s ease;
+}
+
+.nav-arrow:hover img {
+  transform: scale(1.1);
+}
+
+.nav-left {
+  left: 40px;
+}
+
+.nav-right {
+  right: 40px;
+}
+
+/* MOBILE BOTTOM ARROWS */
 .nav-bottom {
-  display: flex;
+  display: none; /* default hidden */
   justify-content: center;
   gap: 40px;
   margin-top: 20px;
@@ -384,7 +433,16 @@ envelope:hover {
   transform: scale(1.1);
 }
 
+/* MOBILE ONLY */
 @media (max-width: 768px) {
+  .nav-arrow {
+    display: none;
+  }
+
+  .nav-bottom {
+    display: flex;
+  }
+
   .nav-bottom img {
     width: 40px;
   }
@@ -393,31 +451,6 @@ envelope:hover {
 @media (max-width: 425px) {
   .nav-bottom img {
     width: 35px;
-  }
-}
-
-/* =========================
-   NAV BUTTONS (CUSTOM ARROWS)
-========================= */
-
-
-/* =========================
-   FADE + SLIGHT SLIDE ANIMATION
-========================= */
-
-.animate-card {
-  animation: fadeSlide 0.45s ease-in-out;
-}
-
-@keyframes fadeSlide {
-  0% {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0);
   }
 }
 

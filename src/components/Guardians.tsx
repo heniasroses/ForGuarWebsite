@@ -47,9 +47,14 @@ export default function Guardians() {
 
       <section className="carouselSection">
 
+        {/* LEFT ARROW (desktop only via CSS) */}
+        <button className="nav-arrow nav-left" onClick={prev}>
+          <img src="/img/arrow-left.png" alt="left" />
+        </button>
+
         {/* CARD */}
         <div className="guardian-card">
-          
+
           <div className="guardian-image">
             <img
               src={g.image_url || "/img/blankGuardian.png"}
@@ -70,9 +75,14 @@ export default function Guardians() {
 
         </div>
 
+        {/* RIGHT ARROW (desktop only via CSS) */}
+        <button className="nav-arrow nav-right" onClick={next}>
+          <img src="/img/arrow-right.png" alt="right" />
+        </button>
+
       </section>
 
-      {/* BOTTOM ARROWS */}
+      {/* BOTTOM ARROWS (mobile only via CSS) */}
       <div className="nav-bottom">
         <button onClick={prev}>
           <img src="/img/arrow-left.png" alt="left" />
