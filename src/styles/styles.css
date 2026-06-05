@@ -174,25 +174,6 @@ envelope:hover {
   transform: scale(1.1);
 }
 
-/*
-
-.fa.fa-youtube-play:hover {
-  color: #81E25E;
-  transform: scale(1.1);
-}
-
-.fab.fa-facebook-f:hover {
-  color: #81E25E;
-  transform: scale(1.1);
-}
-
-.far.fa-star:hover {
-  color: #81E25E;
-  transform: scale(1.1);
-}
-
-*/
-
 .contact-box {
   background: #181818;
   padding: 40px;
@@ -208,9 +189,9 @@ envelope:hover {
 }
 
 .meet {
-  padding-top: 10px;
-  font-size: 60px;
-  padding-bottom: 20px;
+  font-size: 50px;
+  padding-bottom: 50px;
+  color: white;
 }
 
 /* =========================
@@ -294,6 +275,8 @@ envelope:hover {
 
 @media (max-width: 768px) {
 
+
+
   .guardian-card {
     flex-direction: column;
     align-items: center;
@@ -363,12 +346,6 @@ envelope:hover {
   }
 }
 
-@media (max-width: 768px) {
-  .nav-btn {
-    display: none !important;
-  }
-}
-
 .animate-card {
   animation: fadeSlide 0.8s cubic-bezier(0.25, 1, 0.3, 1);
   will-change: transform, opacity;
@@ -385,41 +362,44 @@ envelope:hover {
   }
 }
 
-/* =========================
-   NAV BUTTONS (CUSTOM ARROWS)
-========================= */
-.nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 10;
+.nav-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
 }
 
-.nav-btn img {
-  width: 70px;
+.nav-bottom button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-bottom img {
+  width: 55px;
   transition: 0.2s ease;
 }
 
-.nav-btn:hover img {
+.nav-bottom img:hover {
   transform: scale(1.1);
 }
 
-/* LEFT */
-.nav-btn.left {
-  left: 10px;
-  padding-left: 50px;
-  padding-top: 100px;
+@media (max-width: 768px) {
+  .nav-bottom img {
+    width: 40px;
+  }
 }
 
-/* RIGHT */
-.nav-btn.right {
-  right: 10px;
-  padding-right: 50px;
-  padding-top: 100px;
+@media (max-width: 425px) {
+  .nav-bottom img {
+    width: 35px;
+  }
 }
+
+/* =========================
+   NAV BUTTONS (CUSTOM ARROWS)
+========================= */
+
 
 /* =========================
    FADE + SLIGHT SLIDE ANIMATION
@@ -567,8 +547,8 @@ envelope:hover {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  padding-top: clamp(80px, 25vh, 180px);
-  margin-top: -65px;
+  padding-top: clamp(80px, 25vh, 120px);
+  margin-top: -75px;
   position: relative;
   z-index: 2;
   text-align: center;
