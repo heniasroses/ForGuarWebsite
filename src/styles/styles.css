@@ -327,8 +327,6 @@ envelope:hover {
   .guardian-desc, .guardian-specie {
     font-size: 0.8rem;
   }
-
-  
 }
 
 .carouselTrack {
@@ -916,11 +914,6 @@ envelope:hover {
 
 .guardian-info {
   overflow: visible;
-}
-
-.guardian-specie,
-.guardian-desc {
-  text-align: left;
 }
 
 .aboutUs-container{
