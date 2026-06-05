@@ -22,7 +22,6 @@ export default function Trailer() {
             <br />
             FOREST GUARDIANS TRAILER
             <br />
-            <br />
           </h1>
 
           <p className="text-center trailerParag">
