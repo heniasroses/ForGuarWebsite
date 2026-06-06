@@ -579,6 +579,31 @@ envelope:hover {
   }
 }
 
+@media (max-width: 431px) {
+  .guardian-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .guardian-image {
+    width: clamp(140px, 65vw, 235px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: -30px;
+  }
+
+  .guardian-img{
+    padding-top: 15px;
+  }
+
+  .guardian-model-wrapper{
+    height: 85%;
+    width: clamp(100px, 55vw, 235px);
+  }
+}
+
 .wildlife-almanc {
   padding: 0;
   background: #111111;
