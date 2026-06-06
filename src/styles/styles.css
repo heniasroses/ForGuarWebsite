@@ -1255,10 +1255,14 @@ textarea {
 
 .heroText {
   color: white;
-
-  margin-left: 35px;
-  margin-bottom: 70px;
   font-family: 'Inter';
+
+  padding:
+        0
+        clamp(20px,4vw,40px)
+        clamp(40px,8vw,70px);
+
+    margin:0;
 }
 
 .heroText h1 {
@@ -1267,15 +1271,16 @@ textarea {
 }
 
 .heroText p {
-  margin-top: -10px;
+  margin-top: -5px;
   font-size: 1.2rem;
 }
 
 .forestLogContent {
   background: #181818;
-  padding: 60px 80px;
-  font-family: 'Inter';
+  padding: clamp(30px, 5vw, 60px) clamp(20px, 6vw, 80px);
+  font-family: "Inter";
 }
+
 
 .forestLogFilters {
   display: flex;
@@ -1285,6 +1290,22 @@ textarea {
   margin-top: -80px;
   margin-bottom: 40px;
   font-family: 'Inter';
+}
+
+@media (max-width:900px){
+
+.forestLogFilters{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+
+    margin-top:-40px;
+}
+
+.leftFilters{
+    flex-wrap:wrap;
+}
+
 }
 
 .leftFilters {
@@ -1314,7 +1335,12 @@ textarea {
 
 .logsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(320px, 1fr)
+  );
+
   gap: 30px;
 }
 
@@ -1330,7 +1356,8 @@ textarea {
   flex-direction: column;
 
   height: 250px; /* adjust if needed */
-  width: 350px;
+  width: 100%;
+  max-width: 720px;
   overflow: hidden;
 }
 
