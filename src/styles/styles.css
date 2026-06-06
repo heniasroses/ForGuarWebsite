@@ -1275,6 +1275,15 @@ textarea {
   font-size: 1.2rem;
 }
 
+@media (max-width: 768px) {
+
+  .heroText {
+    margin-bottom: 0;
+    padding-bottom: 100px; /* adjust this value */
+  }
+
+}
+
 .forestLogContent {
   background: #181818;
   padding: clamp(30px, 5vw, 60px) clamp(20px, 6vw, 80px);
