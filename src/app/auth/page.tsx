@@ -1,88 +1,68 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
+import { supabase } from "../../../lib/supabase";
 
 export default function AuthPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Fill all fields");
+      return;
+    }
+
+    setLoading(true);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      alert(error.message);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+
+    // redirect after login
+    router.push("/");
+  };
 
   return (
     <div className="authContainer">
-
-      {/* <Navbar /> */}
-
       <div className="authWrapper">
+        <img src="/img/rose.png" className="authRose" />
 
-        {/* ROSE IMAGE */}
-        <img
-          src="../img/rose.png"
-          alt="Rose"
-          className="authRose"
-        />
-
-        {/* LOGIN BOX */}
         <div className="authBox">
-
-          {/* <h2>Log In</h2> */}
-
-          {/* USERNAME */}
           <div className="authField">
-            <label>Username</label>
-            <input
-              type="text"
-              placeholder="Placeholder"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+            <label>Email</label>
+            <input value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
 
-          {/* PASSWORD */}
           <div className="authField">
             <label>Password</label>
-            <input
-              type="password"
-              placeholder="Placeholder"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
 
-          {/* LOGIN BUTTON */}
-            <button
-                className="loginBtn"
-                onClick={() => {
-                    if (username === "admin" && password === "admin123") {
-                    localStorage.setItem("user", JSON.stringify({
-                        username: "admin",
-                        role: "admin"
-                    }));
+          <button className="loginBtn" onClick={handleLogin} disabled={loading}>
+            {loading ? "Logging in..." : "Log In"}
+          </button>
 
-                    router.push("/admin");
-                    } else {
-                    alert("Invalid credentials");
-                    }
-                }}
-                >
-                Log In
-            </button>
-
-          {/* SIGN UP */}
           <p className="signupText">
             Don’t have an account?{" "}
-            
             <span onClick={() => router.push("/auth/signup")}>
-             Sign Up
+              Sign Up
             </span>
-
           </p>
-
         </div>
-
       </div>
-
     </div>
   );
 }
