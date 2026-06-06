@@ -1600,7 +1600,9 @@ textarea {
   justify-content: center;
   align-items: center;
 
-  font-family: 'Inter';
+  padding: 20px;
+
+  font-family: "Inter";
 }
 
 /* wrapper to stack rose + box */
@@ -1612,25 +1614,27 @@ textarea {
 
 /* ROSE IMAGE */
 .authRose {
-  width: 80px;
+  width: clamp(60px, 15vw, 80px);
+
   margin-bottom: 10px;
   padding-top: 30px;
 }
 
 /* LOGIN BOX */
 .authBox {
-  width: 550px;
+  width: clamp(320px, 100vw, 550px);
   height: auto;
 
   background: #FFFFFF;
   border-radius: 20px;
 
   padding: 30px;
-  font-family: 'Inter';
+
+  font-family: "Inter";
 
   box-shadow:
-    0 10px 25px rgba(0,0,0,0.2),
-    inset 0 0 10px rgba(0,0,0,0.05);
+    0 10px 25px rgba(0, 0, 0, 0.2),
+    inset 0 0 10px rgba(0, 0, 0, 0.05);
 
   margin-bottom: 50px;
 }
@@ -1659,7 +1663,10 @@ textarea {
 
 /* INPUTS */
 .authField input {
-  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px;
 
   border-radius: 10px;
   border: 1px solid #ccc;
@@ -1699,6 +1706,45 @@ textarea {
   font-weight: bold;
   cursor: pointer;
   text-decoration: underline;
+}
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+  .authContainer {
+    padding: 20px;
+  }
+
+  .authBox {
+    width: clamp(280px, 90vw, 550px);
+    padding: 24px;
+    border-radius: 18px;
+  }
+
+  .authRose {
+    padding-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  .authField label {
+    font-size: 0.95rem;
+  }
+
+  .authField input {
+    font-size: 16px;
+  }
+
+  .loginBtn {
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  .signupText {
+    font-size: 0.9rem;
+  }
 }
 
 .adminContainer {
