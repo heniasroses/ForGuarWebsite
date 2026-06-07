@@ -1042,7 +1042,7 @@ envelope:hover {
 }
 
 .aboutUs-text {
-  line-height: 0.85;
+  line-height: 1;
   margin-top: 8px;
   font-size: 13.5px;
   font-family: 'Inter';
@@ -1116,6 +1116,52 @@ envelope:hover {
   line-height: 0.9;
   font-weight: 600;
   color: #ffffff;
+}
+
+/* =========================
+   MOBILE IMAGE FIX
+========================= */
+
+.aboutUs-mobileImage {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  /* turn OFF background image ONLY on mobile */
+  .aboutUs-container {
+    background: #1D1C20;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 0;
+    padding: 68px 0 0 0;
+  }
+
+  /* show the real image */
+  .aboutUs-mobileImage {
+    display: block;
+    width: 100%;
+  }
+
+  .aboutUs-mobileImage img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* center text under image */
+  .aboutUs-content {
+    margin-left: 0;
+    max-width: 90%;
+    text-align: center;
+    padding: 20px;
+  }
+  .aboutUs-title{
+    margin-top: 0;
+    padding-top: 30px;
+  }
 }
 
 .contactUsContainer {
