@@ -9,20 +9,25 @@ export default function Guardians() {
   const [guardians, setGuardians] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchGuardians = async () => {
-      const { data, error } = await supabase
-        .from("guardians")
-        .select("*");
+  const fetchGuardians = async () => {
+    console.log("FETCHING GUARDIANS...");
 
-      if (error) {
-        console.log(error);
-        return;
-      }
+    const { data, error } = await supabase
+      .from("guardians")
+      .select("*");
 
-      setGuardians(data || []);
-    };
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
 
-    fetchGuardians();
+    if (error) {
+      console.log("GUARDIANS ERROR:", error);
+      return;
+    }
+
+    setGuardians(data || []);
+  };
+
+  fetchGuardians();
   }, []);
 
   const next = () => {
