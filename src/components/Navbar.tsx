@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import NavbarProfile from "@/components/NavbarProfile";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -80,8 +81,8 @@ export default function Navbar() {
               {renderLink("/contact-us", "CONTACT US")}
             </li>
 
-            <li className="nav-item">
-              {renderLink("/auth", "PROFILE")}
+            <li className="nav-item d-flex align-items-center">
+              <NavbarProfile />
             </li>
 
           </ul>

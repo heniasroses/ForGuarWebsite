@@ -1904,3 +1904,125 @@ html, body {
 body {
   position: relative;
 }
+
+.navProfile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 6px 13px;
+
+  background: #213D22; /* your dark forest green */
+  border: 1px solid #90FF67;
+
+  border-radius: 25px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.navProfile:hover {
+  background: #192B17;
+  transform: translateY(-1px);
+}
+
+.navAvatar {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  background: #90FF67; /* accent green */
+  color: #0f0f0f;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  font-size: 0.9rem;
+
+  overflow: hidden;
+}
+
+.navUsername {
+  color: #E6EBE8;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.profileDropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+
+  background: #2E322E;
+  border: 1px solid #90FF67;
+
+  border-radius: 12px;
+
+  width: 180px;
+
+  padding: 8px;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+
+  z-index: 1000;
+}
+
+.dropdownItem {
+  padding: 10px;
+
+  color: #E6EBE8;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.dropdownItem:hover {
+  background: #213D22;
+  color: #90FF67;
+}
+
+.dropdownLogout {
+  padding: 10px;
+
+  color: #ff6b6b;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.dropdownLogout:hover {
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.navAuthButton {
+  padding: 6px 24px;
+
+  background: transparent;
+  border: 1px solid #90FF67;
+
+  color: #90FF67;
+
+  border-radius: 20px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.navAuthButton:hover {
+  background: #213D22;
+  color: white;
+}
+
