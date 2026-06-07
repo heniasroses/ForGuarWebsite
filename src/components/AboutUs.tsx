@@ -4,7 +4,7 @@ export default function AboutUs() {
 
       {/* MOBILE IMAGE (ONLY SHOWS ON PHONE) */}
       <div className="aboutUs-mobileImage">
-        <img src="/img/AboutUsBG.png" alt="Henia’s Roses Team" />
+        <img src="/img/AboutUsBGmobile.png" alt="Henia’s Roses Team" />
       </div>
 
       <div className="aboutUs-content">

@@ -1130,7 +1130,7 @@ envelope:hover {
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1180px) {
 
   /* turn OFF background image ONLY on mobile */
   .aboutUs-container {
@@ -1140,6 +1140,21 @@ envelope:hover {
     justify-content: flex-start;
     margin-left: 0;
     padding: 68px 0 0 0;
+  }
+
+  .AboutUstrailer{
+    background: #1D1C20;
+    margin-top: 0;
+  }
+
+  .team-row{
+    margin-top: 0;
+  }
+
+  .team-member {
+  text-align: center;
+  color: #ffffff;
+  padding: 10px;
   }
 
   /* show the real image */

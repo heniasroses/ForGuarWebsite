@@ -26,7 +26,7 @@ export default function Team() {
     <div className="container-fluid Team-container">
       <div className="row team-row">
         {members.map((member, index) => (
-          <div key={index} className="col-md-3 team-member">
+          <div key={index} className="col-xl-3 col-md-6 team-member">
             <img src={member.image} alt={member.name} className="team-image" />
 
             <h4>{member.name}</h4>
