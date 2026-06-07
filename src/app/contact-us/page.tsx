@@ -6,7 +6,7 @@ export default function ContactUsPage() {
     <>
       <Navbar />
 
-      <main className="pageContent">
+      <main className="contactUsPageContent">
         <ContactUs />
       </main>
     </>
