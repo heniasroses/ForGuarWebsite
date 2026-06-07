@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+body{
+  background-color: #181818;
+}
+
 .playButton {
   position: absolute;
   bottom: 40px;
@@ -1694,22 +1698,23 @@ textarea {
 
   margin-top: 8px;
   margin-left: 10px;
+  flex-wrap: wrap;
 }
 
 .categoryRow label {
   display: flex;
   align-items: center;
 
-  gap: 28px;
+  gap: 12px;
 
   color: white;
+  cursor: pointer;
 }
 
-.categoryRow input[type="checkbox"] {
+.categoryRow input[type="radio"] {
   accent-color: #81E25E;
-  transform: scale(3);
+  transform: scale(1.6);
   cursor: pointer;
-  
 }
 
 /* BUTTON COLUMN */
@@ -1751,6 +1756,48 @@ textarea {
 
   cursor: pointer;
 }
+
+.flairContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  margin-bottom: 30px;
+}
+
+.flairBtn {
+  padding: 6px 16px;
+  border-radius: 999px;
+
+  border: 1px solid #90FF67;
+  background: transparent;
+  color: white;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.flairBtn:hover {
+  background: rgba(144, 255, 103, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ACTIVE STATE (IMPORTANT) */
+.flairBtn.active {
+  background: #90FF67;
+  color: #181818;
+  font-weight: bold;
+}
+
+.activeFilter {
+  background: #90FF67;
+  color: #181818;
+  border: 1px solid #90FF67;
+  font-weight: 600;
+}
+
+/* SIGN IN/UP PAGE */
 
 .authContainer {
   background: #E6EBE8;

@@ -1,112 +1,137 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/Navbar";
+import { supabase } from "../../../../lib/supabase";
 
 export default function CreateLogPage() {
   const router = useRouter();
 
-  const [username, setUsername] = useState("");
-  const [topic, setTopic] = useState("");
+  const [user, setUser] = useState<any>(null);
+
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("");
+  const [categoryId, setCategoryId] = useState<string>("");
 
-  const handleSubmit = () => {
-  if (!username || !topic || !content || !category) {
-    alert("Please complete all fields.");
-    return;
-  }
+  const [categories, setCategories] = useState<any[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
 
-  const newLog = {
-    id: Date.now(),
-    username,
-    topic,
-    category,
-    content,
-  };
+  // GET USER
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
 
-  const existingLogs = JSON.parse(
-    localStorage.getItem("forestLogs") || "[]"
-  );
+      if (!data.user) {
+        // ❌ not logged in → redirect to login
+        router.replace("/auth?message=login-required");
+        return;
+      }
 
-  existingLogs.unshift(newLog);
+      setUser(data.user);
+    };
 
-  localStorage.setItem(
-    "forestLogs",
-    JSON.stringify(existingLogs)
-  );
+    getUser();
+  }, [router]);
 
-  router.push("/forest-log");
+  // FETCH CATEGORIES
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoadingCategories(true);
+
+      const { data, error } = await supabase
+        .from("forest_log_categories")
+        .select("*");
+
+      if (error) {
+        console.log("CATEGORY ERROR:", error);
+      } else {
+        setCategories(data || []);
+      }
+
+      setLoadingCategories(false);
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleSubmit = async () => {
+    if (!user) {
+      router.replace("/auth?message=login-required");
+      return;
+    }
+
+    if (!title || !content || !categoryId) {
+      alert("Please complete all fields.");
+      return;
+    }
+
+    const { error } = await supabase.from("forest_logs").insert({
+      user_id: user.id,
+      title,
+      content,
+      category_id: categoryId,
+      is_approved: true,
+      is_hidden: false,
+    });
+
+    if (error) {
+      console.log("INSERT ERROR:", error);
+      alert("Failed to create log.");
+      return;
+    }
+
+    router.push("/forest-log");
   };
 
   return (
     <div className="createLogPage">
-
-      <Navbar />
-
       <div className="createLogBG">
-
         <div className="createLogCard">
 
-          <h1>Create a log</h1>
+          <h1>Create a Log</h1>
 
-          {/* USERNAME */}
+          {/* TITLE */}
           <div className="field">
-            <label>Username</label>
+            <label>Title</label>
             <input
-              type="text"
-              placeholder="Placeholder"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-
-          {/* TOPIC */}
-          <div className="field">
-            <label>Topic</label>
-            <input
-              type="text"
-              placeholder="Placeholder"
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter title"
             />
           </div>
 
           {/* CATEGORY */}
           <div className="field">
-            <label>Log Category</label>
+            <label>Category</label>
 
-            <div className="categoryRow">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={category === "Reviews"}
-                  onChange={() => setCategory("Reviews")}
-                />
-                Game Review
-              </label>
+            {loadingCategories ? (
+              <p style={{ color: "#aaa" }}>Loading categories...</p>
+            ) : (
+              <div className="categoryRow">
 
-              <label>
-                <input
-                  type="checkbox"
-                  checked={category === "Gameplay Strategy / Tips"}
-                  onChange={() =>
-                    setCategory("Gameplay Strategy / Tips")
-                  }
-                />
-                Game Strategy / Tips
-              </label>
-            </div>
+                {categories.map((cat) => (
+                  <label key={cat.id}>
+                    <input
+                      type="radio"
+                      name="category"
+                      checked={categoryId === cat.id}
+                      onChange={() => setCategoryId(cat.id)}
+                    />
+                    {cat.name}
+                  </label>
+                ))}
+
+              </div>
+            )}
           </div>
 
           {/* CONTENT */}
           <div className="field">
             <label>Content</label>
             <textarea
-              placeholder="Placeholder"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              placeholder="Write your log..."
             />
           </div>
 
@@ -114,7 +139,6 @@ export default function CreateLogPage() {
           <div className="buttonColumn">
 
             <button
-              type="button"
               className="cancelBtn"
               onClick={() => router.push("/forest-log")}
             >
@@ -122,7 +146,6 @@ export default function CreateLogPage() {
             </button>
 
             <button
-              type="button"
               className="submitBtn"
               onClick={handleSubmit}
             >
@@ -132,9 +155,7 @@ export default function CreateLogPage() {
           </div>
 
         </div>
-
       </div>
-
     </div>
   );
 }
