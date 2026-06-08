@@ -1692,13 +1692,13 @@ textarea {
 }
 
 .backBtn {
-  background: #2f2f2f;
-  color: white;
+  background: #90FF67;
+  color: black;
 }
 
 .editBtn {
-  background: #90FF67;
-  color: black;
+  background: #D97A1D;
+  color: white;
 }
 
 .deleteBtn {
@@ -1714,6 +1714,69 @@ textarea {
   .forestLogViewCard h1 {
     font-size: 1.6rem;
   }
+}
+
+.deleteModalOverlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.75);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+.deleteModal {
+  background: #2E322E;
+
+  padding: 30px;
+  border-radius: 20px;
+
+  width: min(90vw, 420px);
+
+  text-align: center;
+  color: white;
+}
+
+.deleteModal h2 {
+  color: #90FF67;
+  margin-bottom: 10px;
+}
+
+.deleteModal p {
+  margin-bottom: 20px;
+  color: #d5d5d5;
+}
+
+.deleteModalActions {
+  display: flex;
+  gap: 10px;
+}
+
+.cancelDeleteBtn,
+.confirmDeleteBtn {
+  flex: 1;
+
+  border: none;
+  border-radius: 12px;
+
+  padding: 12px;
+
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancelDeleteBtn {
+  background: #90FF67;
+  color: black;
+}
+
+.confirmDeleteBtn {
+  background: #A12B2B;
+  color: white;
 }
 
 .createLogPage {

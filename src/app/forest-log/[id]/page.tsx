@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "../../../../lib/supabase";
-
 import Navbar from "@/components/Navbar";
 
 export default function ForestLogViewPage() {
@@ -14,7 +13,9 @@ export default function ForestLogViewPage() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
 
-  // GET CURRENT USER
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // GET USER
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -56,18 +57,13 @@ export default function ForestLogViewPage() {
       setLoading(false);
     };
 
-    if (id) {
-      fetchLog();
-    }
+    if (id) fetchLog();
   }, [id]);
 
+  const isOwner = log?.user_id === user?.id;
+
+  // DELETE LOG
   const handleDelete = async () => {
-    const confirmed = confirm(
-      "Are you sure you want to delete this log?"
-    );
-
-    if (!confirmed) return;
-
     const { error } = await supabase
       .from("forest_logs")
       .delete()
@@ -79,18 +75,14 @@ export default function ForestLogViewPage() {
       return;
     }
 
-    alert("Log deleted.");
+    setShowDeleteModal(false);
     router.push("/forest-log");
   };
-
-  const isOwner = log?.user_id === user?.id;
 
   if (loading) {
     return (
       <div className="forestLogViewContainer">
-        <p style={{ color: "white" }}>
-          Loading log...
-        </p>
+        <p style={{ color: "white" }}>Loading log...</p>
       </div>
     );
   }
@@ -98,9 +90,7 @@ export default function ForestLogViewPage() {
   if (!log) {
     return (
       <div className="forestLogViewContainer">
-        <p style={{ color: "white" }}>
-          Log not found.
-        </p>
+        <p style={{ color: "white" }}>Log not found.</p>
       </div>
     );
   }
@@ -108,7 +98,7 @@ export default function ForestLogViewPage() {
   return (
     <div className="forestLogViewContainer">
 
-        <Navbar />
+      <Navbar />
 
       <div className="forestLogViewCard">
 
@@ -125,9 +115,10 @@ export default function ForestLogViewPage() {
 
         <div className="logActions">
 
+          {/* FIXED BACK BUTTON */}
           <button
             className="backBtn"
-            onClick={() => router.back()}
+            onClick={() => router.push("/forest-log")}
           >
             Back
           </button>
@@ -137,9 +128,7 @@ export default function ForestLogViewPage() {
               <button
                 className="editBtn"
                 onClick={() =>
-                  router.push(
-                    `/forest-log/edit/${log.id}`
-                  )
+                  router.push(`/forest-log/edit/${log.id}`)
                 }
               >
                 Edit
@@ -147,7 +136,7 @@ export default function ForestLogViewPage() {
 
               <button
                 className="deleteBtn"
-                onClick={handleDelete}
+                onClick={() => setShowDeleteModal(true)}
               >
                 Delete
               </button>
@@ -157,6 +146,41 @@ export default function ForestLogViewPage() {
         </div>
 
       </div>
+
+      {/* DELETE MODAL */}
+      {showDeleteModal && (
+        <div className="deleteModalOverlay">
+
+          <div className="deleteModal">
+
+            <h2>Delete Log?</h2>
+
+            <p>
+              This action cannot be undone.
+            </p>
+
+            <div className="deleteModalActions">
+
+              <button
+                className="cancelDeleteBtn"
+                onClick={() => setShowDeleteModal(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="confirmDeleteBtn"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
 
     </div>
   );

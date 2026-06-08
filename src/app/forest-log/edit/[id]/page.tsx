@@ -102,8 +102,7 @@ export default function EditLogPage() {
       alert("Update failed.");
       return;
     }
-
-    alert("Log updated.");
+    
     router.push(`/forest-log/${id}`);
   };
 
