@@ -1,9 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { supabase } from "../../lib/supabase";
 
 export default function AdminNavbar() {
   const router = useRouter();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+
+    // FULL RESET (important fix)
+    await supabase.auth.getSession();
+
+    router.replace("/auth");
+    router.refresh();
+  };
 
   return (
     <nav
@@ -11,41 +22,25 @@ export default function AdminNavbar() {
       style={{ background: "#213D22" }}
     >
       <div className="container-fluid">
-
-        {/* LEFT SIDE (optional logo) */}
         <img
-            src="/img/AdminNav.png"
-            alt="Logo"
-            style={{
-            height: "40px",
-            width: "auto",
-            objectFit: "contain",
-            }}
+          src="/img/AdminNav.png"
+          style={{ height: "40px" }}
         />
 
-        {/* RIGHT SIDE */}
-        <div className="ms-auto d-flex align-items-center">
-
+        <div className="ms-auto">
           <button
-            onClick={() => {
-              localStorage.removeItem("user");
-              router.push("/auth");
-            }}
+            onClick={handleLogout}
             style={{
-              background: "#213D22",
-              color: "white",
+              background: "transparent",
               border: "1px solid white",
-              padding: "8px 18px",
+              color: "white",
+              padding: "8px 16px",
               borderRadius: "20px",
-              cursor: "pointer",
-              fontWeight: "bold",
             }}
           >
             Logout
           </button>
-
         </div>
-
       </div>
     </nav>
   );

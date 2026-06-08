@@ -7,8 +7,9 @@ import { supabase } from "../../../lib/supabase";
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -18,6 +19,7 @@ export default function AuthPage() {
 
     setLoading(true);
 
+    // 1. SIGN IN
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -29,10 +31,40 @@ export default function AuthPage() {
       return;
     }
 
+    const user = data.user;
+
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    // 2. FORCE SESSION SYNC (IMPORTANT FIX)
+    await supabase.auth.getSession();
+
+    // 3. GET ROLE FROM PROFILES
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (profileError || !profile) {
+      console.log(profileError);
+      alert("Failed to get user role");
+      setLoading(false);
+      return;
+    }
+
     setLoading(false);
 
-    // redirect after login
-    router.push("/");
+    // 4. ROLE-BASED REDIRECT (CLEAN FIX)
+    if (profile.role === "admin") {
+      router.replace("/admin");
+    } else {
+      router.replace("/forest-log");
+    }
+
+    router.refresh();
   };
 
   return (
@@ -43,15 +75,26 @@ export default function AuthPage() {
         <div className="authBox">
           <div className="authField">
             <label>Email</label>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           <div className="authField">
             <label>Password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
-          <button className="loginBtn" onClick={handleLogin} disabled={loading}>
+          <button
+            className="loginBtn"
+            onClick={handleLogin}
+            disabled={loading}
+          >
             {loading ? "Logging in..." : "Log In"}
           </button>
 

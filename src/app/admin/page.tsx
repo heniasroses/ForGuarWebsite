@@ -1,77 +1,125 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { supabase } from "../../../lib/supabase";
 import AdminNavbar from "@/components/AdminNavbar";
 
 type ForestLog = {
-  id: number;
-  username: string;
-  topic: string;
-  category: string;
+  id: string;
+  title: string;
   content: string;
+  username: string;
+  category: string;
+  user_id: string;
+};
+
+type Category = {
+  id: string;
+  name: string;
 };
 
 export default function AdminPage() {
   const router = useRouter();
+  const pathname = usePathname();
+
   const [logs, setLogs] = useState<ForestLog[]>([]);
-  const [filter, setFilter] = useState("All Topics");
-    const deleteLog = (id: number) => {
-  const updated = logs.filter((log) => log.id !== id);
-  setLogs(updated);
-  localStorage.setItem("forestLogs", JSON.stringify(updated));
-};
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
 
-  const defaultLogs: ForestLog[] = [
-  {
-    id: 1,
-    username: "Aira V.",
-    topic: "First Impressions – Addictive Gameplay Loop",
-    category: "Reviews",
-    content:
-      "I really enjoyed how the wave system works. The 15-wave structure keeps things intense."
-  },
-  {
-    id: 2,
-    username: "Kagami Hayato",
-    topic: "Rajah Bagwis Build Tips",
-    category: "Gameplay Strategy / Tips",
-    content:
-      "Focus on stacking passive early and use Sky Rend aggressively in fights."
-  },
-  {
-    id: 3,
-    username: "Thor",
-    topic: "MARI IS OP!!!!!",
-    category: "Gameplay Strategy / Tips",
-    content:
-      "Her crowd control abilities are perfect for wave defense situations."
-  }
-];
+  // ================= AUTH + LOAD =================
+  useEffect(() => {
+    const init = async () => {
+      setLoading(true);
 
-        useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user") || "null");
+      // GET USER
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-        if (!user || user.role !== "admin") {
-            router.push("/auth");
-        }
+      if (!user) {
+        router.push("/auth");
+        return;
+      }
 
-        const saved = JSON.parse(localStorage.getItem("forestLogs") || "[]");
+      // CHECK ROLE
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
 
-        if (saved.length > 0) {
-            setLogs(saved);
-        } else {
-            setLogs(defaultLogs);
-        }
-        }, []);
+      if (profile?.role !== "admin") {
+        router.push("/");
+        return;
+      }
 
-  const filteredLogs = logs.filter((log) => {
-    if (filter === "All Topics") return true;
-    if (filter === "Reviews") return log.category === "Reviews";
-    if (filter === "Gameplay Strategy and Tips")
-      return log.category === "Gameplay Strategy / Tips";
-    return true;
-  });
+      // FETCH CATEGORIES
+      const { data: catData } = await supabase
+        .from("forest_log_categories")
+        .select("*");
+
+      setCategories(catData || []);
+
+      // FETCH LOGS
+      const { data, error } = await supabase
+        .from("forest_logs")
+        .select(`
+          id,
+          title,
+          content,
+          user_id,
+          profiles:user_id (username),
+          forest_log_categories:category_id (name)
+        `)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.log(error);
+        setLoading(false);
+        return;
+      }
+
+      const formatted: ForestLog[] = (data || []).map((log: any) => ({
+        id: log.id,
+        title: log.title,
+        content: log.content,
+        user_id: log.user_id,
+        username: log.profiles?.username || "Unknown",
+        category: log.forest_log_categories?.name || "Uncategorized",
+      }));
+
+      setLogs(formatted);
+      setLoading(false);
+    };
+
+    init();
+  }, []);
+
+  // ================= DELETE =================
+  const deleteLog = async (id: string) => {
+    const confirmed = confirm("Delete this log?");
+    if (!confirmed) return;
+
+    const { error } = await supabase
+      .from("forest_logs")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      alert("Delete failed");
+      return;
+    }
+
+    setLogs((prev) => prev.filter((l) => l.id !== id));
+  };
+
+  // ================= FILTER =================
+  const filteredLogs =
+    filter === "all"
+      ? logs
+      : logs.filter((l) => l.category === filter);
 
   return (
     <>
@@ -79,85 +127,103 @@ export default function AdminPage() {
 
       <div className="adminContainer">
 
-        {/* LEFT SIDEBAR */}
+        {/* ================= SIDEBAR FIXED ================= */}
         <div className="adminSidebar">
 
-          <h3 onClick={() => router.push("/forums")}>Forums</h3>
-          <h3 onClick={() => router.push("/almanac")}>Almanac</h3>
+          <h3
+            className={`adminSidebarItem ${
+              pathname.includes("/admin") ? "activeSidebar" : ""
+            }`}
+            onClick={() => router.push("/admin")}
+          >
+            Forest Logs
+          </h3>
+          <h3
+            className={`adminSidebarItem ${
+              pathname.includes("/almanac") ? "activeSidebar" : ""
+            }`}
+            onClick={() => router.push("/almanac")}
+          >
+            Almanac
+          </h3>
 
         </div>
 
-        {/* MAIN CONTENT */}
+        {/* ================= MAIN ================= */}
         <div className="adminMain">
 
-          {/* FILTER BUTTONS */}
+          {/* FILTERS */}
           <div className="forestLogFilters">
 
             <div className="leftFilters AdminForumFilter">
+
               <button
-                className="ForGuarButtons AdminForumFilterBtn"
-                onClick={() => setFilter("All Topics")}
+                className={`ForGuarButtons ${
+                  filter === "all" ? "activeFilterAdmin" : ""
+                }`}
+                onClick={() => setFilter("all")}
               >
                 All Topics
               </button>
 
-              <button
-                className="ForGuarButtons AdminForumFilterBtn"
-                onClick={() => setFilter("Reviews")}
-              >
-                Reviews
-              </button>
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  className={`ForGuarButtons ${
+                    filter === cat.name ? "activeFilterAdmin" : ""
+                  }`}
+                  onClick={() => setFilter(cat.name)}
+                >
+                  {cat.name}
+                </button>
+              ))}
 
-              <button
-                className="ForGuarButtons AdminForumFilterBtn"
-                onClick={() =>
-                  setFilter("Gameplay Strategy and Tips")
-                }
-              >
-                Gameplay Strategy and Tips
-              </button>
             </div>
 
           </div>
 
-          {/* LOGS GRID */}
-          <div className="adminGrid">
+          {/* LOADING */}
+          {loading ? (
+            <p style={{ color: "white" }}>Loading...</p>
+          ) : (
+            <div className="adminGrid">
 
-            {filteredLogs.map((log) => (
-              <div className="adminCard" key={log.id}>
+              {filteredLogs.map((log) => (
+                <div className="adminCard" key={log.id}>
 
-                <h2>{log.topic}</h2>
+                  <h2>{log.title}</h2>
+                  <p className="adminUser">{log.username}</p>
+                  <p className="adminCategory">{log.category}</p>
 
-                <p className="adminUser">{log.username}</p>
+                  <p className="adminContent">
+                    {log.content}
+                  </p>
 
-                <p className="adminCategory">{log.category}</p>
+                  <div className="adminButtons">
 
-                <p className="adminContent">{log.content}</p>
+                    <button
+                      className="viewBtn"
+                      onClick={() =>
+                        router.push(`/admin/forest-log/${log.id}`)
+                      }
+                    >
+                      View
+                    </button>
 
-                <div className="adminButtons">
+                    <button
+                      className="deleteBtn"
+                      onClick={() => deleteLog(log.id)}
+                    >
+                      Delete
+                    </button>
 
-                  <button
-                    className="viewBtn"
-                    onClick={() =>
-                      router.push(`/forest-log/${log.id}`)
-                    }
-                  >
-                    View
-                  </button>
-
-                  <button
-                    className="deleteBtn"
-                    onClick={() => deleteLog(log.id)}
-                  >
-                    Delete
-                  </button>
+                  </div>
 
                 </div>
+              ))}
 
-              </div>
-            ))}
-
-          </div>
+            </div>
+          )}
 
         </div>
       </div>

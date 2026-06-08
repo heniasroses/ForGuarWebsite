@@ -1954,7 +1954,7 @@ textarea {
   font-weight: bold;
 }
 
-.activeFilter {
+.activeFilterAdmin {
   background: #90FF67;
   color: #181818;
   border: 1px solid #90FF67;
@@ -2118,85 +2118,244 @@ textarea {
   }
 }
 
+/* =========================
+   ADMIN LAYOUT
+========================= */
+
 .adminContainer {
   display: flex;
   min-height: 100vh;
-  font-family: 'Inter';
+  font-family: "Inter";
 }
 
-/* LEFT SIDEBAR */
+/* =========================
+   SIDEBAR
+========================= */
+
 .adminSidebar {
-  width: 200px;
-  background: #FFFFFF;
+  width: 220px;
+  background: #ffffff;
   color: #213D22;
 
   padding: 20px;
+  padding-top: 90px;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 
   border-right: 1px solid #ddd;
-  padding-top: 90px;
 }
 
-.adminSidebar h3 {
+/* ITEMS */
+.adminSidebarItem {
+  padding: 12px 14px;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+
+  color: #213D22;
+  position: relative;
+}
+
+/* HOVER */
+.adminSidebarItem:hover {
+  background: rgba(33, 61, 34, 0.08);
+}
+
+/* ACTIVE STATE (STRONGER + MODERN LOOK) */
+.adminSidebarItem.active {
+  background: rgba(33, 61, 34, 0.12);
   color: #213D22;
 }
 
-/* MAIN AREA */
+/* LEFT ACCENT BAR FOR ACTIVE ITEM */
+.adminSidebarItem.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 4px;
+  background: #213D22;
+  border-radius: 0 4px 4px 0;
+}
+
+/* OPTIONAL: ACTIVE HOVER FEEL */
+.adminSidebarItem.active:hover {
+  background: rgba(33, 61, 34, 0.18);
+}
+
+/* active filter pill */
+.activeFilter {
+  background: #90FF67 !important;
+  color: #0f2a10 !important;
+  border: 1px solid #90FF67;
+}
+
+.activeSidebar {
+  background: rgba(33, 61, 34, 0.31);
+  color: #213D22;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* =========================
+   SIDEBAR FONT CONTROL
+========================= */
+
+.adminSidebarItem {
+  font-size: 0.95rem; /* default desktop size */
+}
+
+.activeSidebar {
+  font-size: 0.95rem;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .adminSidebarItem,
+  .activeSidebar {
+    font-size: 0.9rem;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .adminSidebarItem,
+  .activeSidebar {
+    font-size: 0.85rem;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 480px) {
+  .adminSidebarItem,
+  .activeSidebar {
+    font-size: 0.8rem;
+  }
+}
+
+/* =========================
+   MAIN
+========================= */
+
 .adminMain {
   flex: 1;
   background: #E6EBE8;
   padding: 60px;
+  padding-top: 180px;
 }
 
-/* GRID */
+/* =========================
+   FILTERS
+========================= */
+
+.forestLogFilters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 40px;
+}
+
+.leftFilters {
+  display: flex;
+  gap: 15px;
+}
+
+.ForGuarButtons {
+  background: #213D22;
+  color: white;
+
+  border: 1px solid white;
+
+  padding: 6px 22px;
+  border-radius: 25px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.ForGuarButtons:hover {
+  opacity: 0.8;
+}
+
+.AdminForumFilter {
+  padding-top: 0;
+}
+
+/* =========================
+   ADMIN FILTER BUTTON STYLE
+========================= */
+
+.adminMain .ForGuarButtons {
+  background: transparent;
+  color: #213D22;
+
+  border: 1px solid #213D22;
+
+  padding: 6px 22px;
+  border-radius: 25px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* hover */
+.adminMain .ForGuarButtons:hover {
+  background: rgba(33, 61, 34, 0.08);
+}
+
+/* ACTIVE STATE */
+.adminMain .activeFilterAdmin {
+  background: #213D22 !important;
+  color: #ffffff !important;
+  border: 1px solid #213D22 !important;
+}
+
+/* =========================
+   GRID
+========================= */
+
 .adminGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
 
-/* CARD */
+/* =========================
+   CARD
+========================= */
+
 .adminCard {
-  background: #FFFFFF;
-  border-radius: 10px;
+  background: #ffffff;
+  border-radius: 12px;
 
   padding: 20px;
 
   display: flex;
   flex-direction: column;
-
-  overflow: hidden;
 }
 
-/* TEXT */
 .adminCard h2 {
   color: #1A3417;
-  text-align: left;
   font-size: 1.2rem;
-
   word-break: break-word;
 }
 
 .adminUser {
   font-weight: bold;
-  text-align: left;
 }
 
 .adminCategory {
   font-size: 0.85rem;
   color: gray;
-  text-align: left;
 }
 
 .adminContent {
   margin-top: 10px;
-  text-align: left;
-
-  word-break: break-word;
-  overflow-wrap: break-word;
 
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -2204,18 +2363,18 @@ textarea {
   overflow: hidden;
 }
 
-/* BUTTONS */
+/* =========================
+   BUTTONS
+========================= */
+
 .adminButtons {
   margin-top: auto;
-
   display: flex;
-  justify-content: space-between;
   gap: 10px;
 }
 
 .viewBtn {
   flex: 1;
-
   background: #213D22;
   color: white;
 
@@ -2228,7 +2387,6 @@ textarea {
 
 .deleteBtn {
   flex: 1;
-
   background: #B51F1F;
   color: white;
 
@@ -2239,16 +2397,71 @@ textarea {
   cursor: pointer;
 }
 
-.AdminForumFilter{
-  padding-top: 120px;
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
 }
 
-.AdminForumFilterBtn{
-  background: transparent;
+.modalBox {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
 }
 
-.AdminForumFilterBtn:hover {
-  background: #213D22;
+.modalBox h2 {
+  color: #213D22;
+  margin-bottom: 10px;
+}
+
+.modalBox p {
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1024px) {
+  .adminGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .adminContainer {
+    flex-direction: column;
+  }
+
+  .adminSidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+
+  }
+
+  .adminMain {
+    padding-top: 70px;
+  }
+
+  .adminGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* =========================
