@@ -1534,16 +1534,13 @@ textarea {
 
 .forestLogCard {
   background: #2E322E;
-  min-width: 0;
-
   border-radius: 5px;
-
   padding: 25px;
 
   display: flex;
   flex-direction: column;
 
-  height: 250px; /* adjust if needed */
+  height: 250px;
   width: 100%;
   max-width: 720px;
   overflow: hidden;
@@ -1581,13 +1578,14 @@ textarea {
 
   overflow-wrap: break-word;
   word-break: break-word;
-  white-space: normal;
 
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 
   overflow: hidden;
+
+  flex: 1;
 }
 
 .viewLogButton {
@@ -1596,15 +1594,12 @@ textarea {
   align-self: center;
 
   background: #18191A;
-
   color: white;
 
   border: 1px solid white;
-
   border-radius: 25px;
 
   padding: 8px 24px;
-
   font-size: 0.9rem;
 
   cursor: pointer;
