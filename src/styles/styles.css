@@ -1728,8 +1728,17 @@ textarea {
 
 .categoryRow input[type="radio"] {
   accent-color: #81E25E;
-  transform: scale(1.6);
-  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .categoryRow {
+    flex-direction: column;
+    gap: 12px;
+    margin-left: 0;
+  }
 }
 
 /* BUTTON COLUMN */
