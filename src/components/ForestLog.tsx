@@ -151,9 +151,11 @@ export default function ForestLog() {
                   {log.content}
                 </p>
 
-                <button className="viewLogButton">
-                  View Log
-                </button>
+                <Link href={`/forest-log/${log.id}`}>
+                  <button className="viewLogButton">
+                    View Log
+                  </button>
+                </Link>
 
               </div>
             ))}
