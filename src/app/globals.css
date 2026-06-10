@@ -68,6 +68,10 @@ a {
   }
 }
 
+.navbar-nav{
+  gap: 30px;
+}
+
 .navbar .nav-link {
   color: white !important;
 }
