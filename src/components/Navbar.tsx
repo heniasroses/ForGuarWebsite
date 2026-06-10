@@ -50,7 +50,24 @@ export default function Navbar() {
     >
       <div className="container-fluid">
 
-        <img src="/img/LOGO.png" width="94" height="39" alt="Logo" />
+        <Link
+          href="/"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none",
+          }}
+        >
+          <img
+            src="/img/LOGO.png"
+            width="94"
+            height="39"
+            alt="Logo"
+            style={{
+              cursor: "pointer",
+            }}
+          />
+        </Link>
         <button
           className="mobileMenuButton"
           onClick={() => setMenuOpen(!menuOpen)}
