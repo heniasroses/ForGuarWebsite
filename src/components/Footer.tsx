@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Footer() {
   return (
     <div className="container-fluid Footer">
@@ -28,17 +29,26 @@ export default function Footer() {
       </div>
 
       <div className="footerIcons">
+        
+        <Link href="/contact-us" >
         <img
           src="/img/icons/email.png"
           alt="Email"
           className="footer-icon"
         />
-
-        <img
+        </Link>
+        <a
+          href="http://www.youtube.com/@HeniasRoses"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
           src="/img/icons/youtube.png"
           alt="YouTube"
           className="footer-icon"
         />
+        </a>
+        
 
         <img
           src="/img/icons/facebook.png"
