@@ -612,12 +612,19 @@ envelope:hover {
 
 .wildlife-almanc {
   padding: 0;
-  background: #111111;
+
+  background: linear-gradient(
+    180deg,
+    #111111 0%,
+    #1c1c22 50%,
+    #2b2b37 100%
+  );
+
   min-height: 10vh;
   justify-content: flex-start;
   align-items: center;
   text-align: center;
-  font-family: 'Inter';
+  font-family: "Inter";
   margin-top: -1px;
   z-index: 4;
 }
