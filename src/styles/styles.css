@@ -1041,21 +1041,21 @@ envelope:hover {
 }
 
 .aboutUs-content {
-  max-width: 310px;
+  max-width: 280px;
   margin-left: 4.6rem; /* distance from left edge */
   text-align: left;
   color: #ffff;
 }
 
 .aboutUs-title{
-  margin-top: 85px;
+  margin-top: 100px;
   font-weight: 645;
   font-size: 31.5px;
   font-family: 'Inter';
 }
 
 .aboutUs-text {
-  line-height: 1;
+  line-height: 1.5;
   margin-top: 8px;
   font-size: 13.5px;
   font-family: 'Inter';
@@ -1070,7 +1070,7 @@ envelope:hover {
   background-position: center top;
   min-height: 115vh;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   padding-top: clamp(80px, 12vh, 180px);
@@ -1092,7 +1092,6 @@ envelope:hover {
 .team-row {
   width: 90%;
   max-width: 1400px;
-  margin-top: -70px;
   z-index: 5;
   margin-bottom: 80px;
 }
