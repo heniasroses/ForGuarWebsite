@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
+import { Inter } from "next/font/google";
 
 type Log = {
   id: string;
@@ -135,31 +136,30 @@ export default function ForestLog() {
         {/* LOADING STATE */}
         {loading ? (
           <p style={{ color: "white" }}>Loading logs...</p>
+        ) : filteredLogs.length === 0 ? (
+          <div className="emptyLogs">
+            <h2>No forest whispers found 🌿</h2>
+            <p>
+              It looks like this section is still quiet… try another category or create a new log.
+            </p>
+          </div>
         ) : (
           <div className="logsGrid">
-
             {filteredLogs.map((log) => (
               <div className="forestLogCard" key={log.id}>
-
                 <h2>{log.title}</h2>
 
                 <p className="author">
                   {log.username} • {log.category}
                 </p>
 
-                <p className="content">
-                  {log.content}
-                </p>
+                <p className="content">{log.content}</p>
 
                 <Link href={`/forest-log/${log.id}`}>
-                  <button className="viewLogButton">
-                    View Log
-                  </button>
+                  <button className="viewLogButton">View Log</button>
                 </Link>
-
               </div>
             ))}
-
           </div>
         )}
 

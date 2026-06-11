@@ -1789,6 +1789,25 @@ textarea {
   color: white;
 }
 
+.emptyLogs {
+  text-align: center;
+  color: white;
+
+  padding: 60px 20px;
+  opacity: 0.9;
+}
+
+.emptyLogs h2 {
+  font-size: 1.5rem;
+  color: #90FF67;
+  margin-bottom: 10px;
+}
+
+.emptyLogs p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
+}
+
 .createLogPage {
   font-family: 'Inter';
   min-height: 100vh;
