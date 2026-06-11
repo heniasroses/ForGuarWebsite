@@ -3,7 +3,7 @@ export default function Almanac() {
     <div className="container-fluid wildlife-almanc">
       <div className="flex-row justify-content-center align-items-center">
         <h1 className="text-white wildlife">
-          <strong>WILD LIFE ALMANAC</strong>
+          <strong>WILDLIFE ALMANAC</strong>
         </h1>
 
         <div className="d-flex flex-row justify-content-center align-items-center book-div">

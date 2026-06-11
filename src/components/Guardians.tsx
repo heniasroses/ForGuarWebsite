@@ -90,7 +90,7 @@ export default function Guardians() {
             <h1 className="guardian-title">{g.title}</h1>
 
             <p className="guardian-specie">
-              Specie: {g.species_based_on}
+              Species: {g.species_based_on}
             </p>
 
             <p className="guardian-desc">
