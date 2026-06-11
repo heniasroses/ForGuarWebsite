@@ -1185,16 +1185,18 @@ envelope:hover {
   }
 }
 
+/* CONTACT US PAGE */
+
 .contactUsContainer {
-  min-height: 100vh;
+  min-height: 130vh;
   background: url("/img/ContactUsBG.png");
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 60px;
   font-family: "Inter";
+
+  margin-top: -80px;
 }
 
 /* MAIN LAYOUT */
@@ -1344,11 +1346,14 @@ textarea {
 
   .contactUsRow {
     flex-direction: column;
-    gap: 30px;
   }
 
   .contactLeft {
     text-align: center;
+  }
+
+  .contactLeft h1{
+    padding-top: 90px;
   }
 
   .contactLeft p {
@@ -1361,7 +1366,7 @@ textarea {
 
   .contactRight {
     width: 100%;
-    padding: 25px;
+    margin-bottom: 80px;
   }
 
   .rowTwoInputs {
@@ -1386,6 +1391,7 @@ textarea {
 
   .contactLeft h1 {
     font-size: 1.8rem;
+    padding-top: 100px;
   }
 
   .contactLeft p {
@@ -1393,8 +1399,8 @@ textarea {
   }
 
   .contactRight {
-    padding: 20px;
     border-radius: 20px;
+    margin-bottom: 90px;
   }
 
   .contactIcons {
@@ -1411,11 +1417,17 @@ textarea {
     padding: 10px;
     font-size: 0.95rem;
   }
+
+  .contactUsRow{
+    gap: 50px;
+  }
 }
 
 .contactUsPageContent {
     padding-top: 68px; /* navbar height */
 }
+
+/* FOREST LOG PAGE */
 
 .forestLogContainer {
   padding: 0;
@@ -1525,13 +1537,15 @@ textarea {
 
 .logsGrid {
   display: grid;
-  justify-items: center;
   grid-template-columns: repeat(
     auto-fit,
     minmax(320px, 1fr)
   );
+  justify-content: start;
 
   gap: 30px;
+  margin-bottom: 75px;
+  
 }
 
 .forestLogCard {
@@ -1541,10 +1555,9 @@ textarea {
 
   display: flex;
   flex-direction: column;
-
-  height: 250px;
   width: 100%;
-  max-width: 720px;
+  max-width: 400px;
+  height: 250px;
   overflow: hidden;
 }
 
