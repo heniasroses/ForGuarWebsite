@@ -4,8 +4,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
-export default function NavbarProfile() {
+type Props = {
+  openAuth: () => void;
+};
+
+export default function NavbarProfile({
+  openAuth,
+}: Props) {
   const router = useRouter();
+
   const [user, setUser] = useState<any>(null);
   const [open, setOpen] = useState(false);
 
@@ -17,29 +24,32 @@ export default function NavbarProfile() {
 
     getUser();
 
-    // listen for login/logout changes
-    const { data: listener } = supabase.auth.onAuthStateChange(
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUser(session?.user ?? null);
       }
     );
 
     return () => {
-      listener.subscription.unsubscribe();
+      subscription.unsubscribe();
     };
   }, []);
 
   const logout = async () => {
     await supabase.auth.signOut();
     setUser(null);
-    router.push("/auth");
+    setOpen(false);
+    router.push("/");
+    router.refresh();
   };
 
   if (!user) {
     return (
       <button
         className="navAuthButton"
-        onClick={() => router.push("/auth")}
+        onClick={openAuth}
       >
         SIGN IN
       </button>
@@ -55,18 +65,22 @@ export default function NavbarProfile() {
 
   return (
     <div style={{ position: "relative" }}>
-      {/* PROFILE BUTTON */}
       <div
         className="navProfile"
         onClick={() => setOpen(!open)}
       >
-        <div className="navAvatar">{initial}</div>
-        <span className="navUsername">{username}</span>
+        <div className="navAvatar">
+          {initial}
+        </div>
+
+        <span className="navUsername">
+          {username}
+        </span>
       </div>
 
-      {/* DROPDOWN */}
       {open && (
         <div className="profileDropdown">
+
           <div className="dropdownItem">
             View Profile
           </div>
@@ -77,6 +91,7 @@ export default function NavbarProfile() {
           >
             Log Out
           </div>
+
         </div>
       )}
     </div>

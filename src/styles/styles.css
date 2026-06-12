@@ -2119,6 +2119,71 @@ textarea {
   text-decoration: underline;
 }
 
+/* Overlay Authentication */
+
+.authModalOverlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+
+  backdrop-filter: blur(4px);
+}
+
+.authWrapper {
+  position: relative;
+}
+
+.authCloseBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  background: transparent;
+  border: none;
+
+  color: #213D22;
+
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.authOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+.authWrapper {
+  position: relative;
+  animation: popup 0.25s ease;
+}
+
+@keyframes popup {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* ========================= */
 /* MOBILE */
 /* ========================= */
