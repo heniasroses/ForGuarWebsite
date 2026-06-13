@@ -90,15 +90,13 @@ export default function LoginForm({
           ✕
         </button>
 
-        <img
-          src="/img/rose.png"
-          className="authRose"
-          alt="Rose"
-        />
-
         <div className="authBox">
 
-          <h2>Sign In</h2>
+          <img
+            src="/img/rose.png"
+            className="authRose"
+            alt="Rose"
+           />
 
           <div className="authField">
             <label>Email</label>

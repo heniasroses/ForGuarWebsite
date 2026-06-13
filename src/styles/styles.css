@@ -2025,10 +2025,11 @@ textarea {
 
 /* ROSE IMAGE */
 .authRose {
-  width: clamp(60px, 15vw, 80px);
+  width: clamp(40px, 12vw, 75px);
 
   margin-bottom: 10px;
-  padding-top: 30px;
+
+  align-self: center;
 }
 
 /* LOGIN BOX */
@@ -2047,7 +2048,8 @@ textarea {
     0 10px 25px rgba(0, 0, 0, 0.2),
     inset 0 0 10px rgba(0, 0, 0, 0.05);
 
-  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* TITLE */
@@ -2077,7 +2079,7 @@ textarea {
   width: 100%;
   box-sizing: border-box;
 
-  padding: 12px;
+  padding: 8px 12px;
 
   border-radius: 10px;
   border: 1px solid #ccc;
@@ -2090,7 +2092,7 @@ textarea {
   width: 100%;
   margin-top: 10px;
 
-  padding: 12px;
+  padding: 10px;
 
   background: #213D22;
   color: white;
@@ -2142,8 +2144,8 @@ textarea {
 
 .authCloseBtn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 25px;
 
   background: transparent;
   border: none;

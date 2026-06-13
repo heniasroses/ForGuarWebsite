@@ -69,9 +69,20 @@ export default function SignupForm({
 
   return (
     <div className="authWrapper">
-      <img src="/img/rose.png" className="authRose" />
 
-      <div className="authBox">
+      <div className="authBox signupBox">
+        <button
+          className="authCloseBtn"
+          onClick={onClose}
+        >
+          ✕
+        </button>
+
+        <img
+          src="/img/rose.png"
+          className="authRose"
+          alt="Rose"
+        />
         <div className="authField">
           <label>Username</label>
           <input
