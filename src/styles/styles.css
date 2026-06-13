@@ -2212,11 +2212,11 @@ textarea {
   }
 
   .authField input {
-    font-size: 16px;
+    font-size: 10px;
   }
 
   .loginBtn {
-    padding: 14px;
+    padding: 10px;
     font-size: 1rem;
   }
 
