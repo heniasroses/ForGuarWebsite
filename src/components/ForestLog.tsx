@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
-import { Inter } from "next/font/google";
+import CreateLogModal from "@/components/CreateLogModal";
+import AuthModal from "@/components/AuthModal";
 
 type Log = {
   id: string;
@@ -25,7 +26,26 @@ export default function ForestLog() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
+  const [showCreateLog, setShowCreateLog] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  const addNewLog = (newLog: Log) => {
+  setLogs((prev) => [newLog, ...prev]);
+  };
+
+  useEffect(() => {
+  const { data: listener } = supabase.auth.onAuthStateChange(() => {
+    // DO NOTHING UI-RELATED HERE
+    // only logging or syncing if needed
+  });
+
+  return () => {
+    listener.subscription.unsubscribe();
+  };
+  }, []);
+
   // FETCH CATEGORIES
+
   useEffect(() => {
     const fetchCategories = async () => {
       const { data } = await supabase
@@ -45,7 +65,8 @@ export default function ForestLog() {
 
       const { data, error } = await supabase
         .from("forest_logs")
-        .select(`
+        .select(
+          `
           id,
           title,
           content,
@@ -53,7 +74,8 @@ export default function ForestLog() {
           category_id,
           profiles:user_id (username),
           forest_log_categories:category_id (name)
-        `)
+          `
+        )
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -77,7 +99,17 @@ export default function ForestLog() {
     fetchLogs();
   }, []);
 
-  // FILTERED LOGS
+  const handleCreateClick = async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) {
+    setShowAuthModal(true);
+    return;
+  }
+
+  setShowCreateLog(true);
+  };
+
   const filteredLogs =
     selectedCategory === "all"
       ? logs
@@ -97,12 +129,11 @@ export default function ForestLog() {
       {/* CONTENT */}
       <section className="forestLogContent">
 
-        {/* FILTERS (FLAIR STYLE) */}
+        {/* FILTERS */}
         <div className="forestLogFilters">
 
           <div className="leftFilters">
 
-            {/* ALL BUTTON */}
             <button
               className={`ForGuarButtons ${selectedCategory === "all" ? "activeFilter" : ""}`}
               onClick={() => setSelectedCategory("all")}
@@ -110,7 +141,6 @@ export default function ForestLog() {
               All
             </button>
 
-            {/* CATEGORY BUTTONS */}
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -125,23 +155,22 @@ export default function ForestLog() {
 
           </div>
 
-          <Link href="/forest-log/create" className="linkZ">
-            <button className="ForGuarButtons createLogButton">
-              + Create Log
-            </button>
-          </Link>
+          <button
+            className="ForGuarButtons createLogButton"
+            onClick={handleCreateClick}
+          >
+            + Create Log
+          </button>
 
         </div>
 
-        {/* LOADING STATE */}
+        {/* CONTENT */}
         {loading ? (
           <p style={{ color: "white" }}>Loading logs...</p>
         ) : filteredLogs.length === 0 ? (
           <div className="emptyLogs">
             <h2>No forest whispers found 🌿</h2>
-            <p>
-              It looks like this section is still quiet… try another category or create a new log.
-            </p>
+            <p>Try another category or create a new log.</p>
           </div>
         ) : (
           <div className="logsGrid">
@@ -164,6 +193,19 @@ export default function ForestLog() {
         )}
 
       </section>
+
+      {/* MODALS */}
+      {showCreateLog && (
+        <CreateLogModal
+          onClose={() => setShowCreateLog(false)}
+          onLogCreated={addNewLog}
+        />
+      )}
+
+      {showAuthModal && (
+        <AuthModal onClose={() => setShowAuthModal(false)} />
+      )}
+
     </div>
   );
 }

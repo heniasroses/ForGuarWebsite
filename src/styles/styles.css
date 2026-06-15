@@ -1819,7 +1819,7 @@ textarea {
   min-height: 100vh;
 }
 
-/* BACKGROUND */
+/* BACKGROUND (REMOVED)*/ 
 .createLogBG {
   min-height: 100vh;
   background: url("/img/CreateLogBG.png");
@@ -1833,13 +1833,31 @@ textarea {
   padding: 40px;
 }
 
+/* =========================
+   MODAL OVERLAY (NEW)
+========================= */
+
+.createLogOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
 /* CARD */
 .createLogCard {
-  width: 850px;
+  width: 650px;
   background: #181818;
   border-radius: 20px;
-  margin-top: 80px;
-  padding: 50px;
+  padding: 35px;
   color: white;
   font-family: 'Inter';
 }
@@ -1848,7 +1866,7 @@ textarea {
 .createLogCard h1 {
   text-align: center;
   color: #90FF67;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   font-size: 2rem;
   font-family: 'Inter';
   font-weight: 600;
@@ -1863,13 +1881,14 @@ textarea {
 }
 
 .field label {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 /* INPUTS */
 .field input,
 .field textarea {
   background: white;
+  font-size: 15x;
 
   border: none;
 
