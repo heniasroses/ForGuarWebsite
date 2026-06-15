@@ -1194,7 +1194,7 @@ envelope:hover {
 /* CONTACT US PAGE */
 
 .contactUsContainer {
-  min-height: 130vh;
+  min-height: 115vh;
   background: url("/img/ContactUsBG.png");
   background-size: cover;
   background-position: center;

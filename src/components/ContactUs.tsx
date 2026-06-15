@@ -9,13 +9,14 @@ export default function ContactUs() {
 
           <p>
             If you have any inquiries or just want to say hi, please use the contact form!
+            <br></br>
+            <br></br>
+            <b>Email:</b> heniasroses@gmail.com
+            <br></br>
+            <b>Youtube:</b> Henia's Roses
+            <br></br>
+            <b>Facebook:</b> Henia's Roses
           </p>
-
-          <div className="contactIcons">
-            <img src="/img/icons/email.png" alt="fb" />
-            <img src="/img/icons/youtube.png" alt="ig" />
-            <img src="/img/icons/facebook.png" alt="email" />
-          </div>
         </div>
 
         {/* RIGHT SIDE */}
