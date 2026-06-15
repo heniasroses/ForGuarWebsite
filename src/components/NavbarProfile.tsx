@@ -80,11 +80,11 @@ export default function NavbarProfile({
 
       {open && (
         <div className="profileDropdown">
-
+          {/* 
           <div className="dropdownItem">
             View Profile
           </div>
-
+          */}
           <div
             className="dropdownLogout"
             onClick={logout}

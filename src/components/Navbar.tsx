@@ -87,7 +87,7 @@ export default function Navbar() {
               </li>
 
               <li className="nav-item">
-                {renderLink("/forest-log", "FOREST LOG")}
+                {renderLink("/forest-log", "FOREST LOGS")}
               </li>
 
               <li className="nav-item">
