@@ -1199,6 +1199,7 @@ envelope:hover {
   background-size: cover;
   background-position: center;
   display: flex;
+  justify-content: center;
   padding: 60px;
   font-family: "Inter";
 
