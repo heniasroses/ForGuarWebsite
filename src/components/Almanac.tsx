@@ -59,21 +59,53 @@ export default function Almanac() {
           {/* LEFT PAGE - PNG BUTTONS */}
           <div className="leftPageOverlay">
 
-            {entries.map((entry) => (
-              <button
-                key={entry.id}
-                className={`diamondBtn ${
-                  selected?.id === entry.id ? "activeBtn" : ""
-                }`}
-                onClick={() => setSelected(entry)}
-              >
-                <img
-                  src={entry.image_url}
-                  alt={entry.common_name}
-                  className="almanacBtnImg"
-                />
-              </button>
-            ))}
+            <div className="row3">
+              {entries.slice(0, 3).map((entry) => (
+                <button
+                  key={entry.id}
+                  className="diamondBtn"
+                  onClick={() => setSelected(entry)}
+                >
+                  <img src={entry.image_url} className="almanacBtnImg" />
+                </button>
+              ))}
+            </div>
+
+            <div className="row4">
+              {entries.slice(3, 7).map((entry) => (
+                <button
+                  key={entry.id}
+                  className="diamondBtn"
+                  onClick={() => setSelected(entry)}
+                >
+                  <img src={entry.image_url} className="almanacBtnImg" />
+                </button>
+              ))}
+            </div>
+
+            <div className="row3">
+              {entries.slice(7, 10).map((entry) => (
+                <button
+                  key={entry.id}
+                  className="diamondBtn"
+                  onClick={() => setSelected(entry)}
+                >
+                  <img src={entry.image_url} className="almanacBtnImg" />
+                </button>
+              ))}
+            </div>
+
+            <div className="row4">
+              {entries.slice(10, 14).map((entry) => (
+                <button
+                  key={entry.id}
+                  className="diamondBtn"
+                  onClick={() => setSelected(entry)}
+                >
+                  <img src={entry.image_url} className="almanacBtnImg" />
+                </button>
+              ))}
+            </div>
 
           </div>
 
