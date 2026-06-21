@@ -20,14 +20,6 @@ export default function Footer() {
         />
       </div>
 
-      <div className="flex-row justify-content-center align-items-center">
-        <p className="footerParagraph">
-          A team of 4 game developers united by a shared passion for developing
-          games that merge compelling aesthetics with immersive, educational
-          storytelling.
-        </p>
-      </div>
-
       <div className="footerIcons">
         
         <Link href="/contact-us" >
