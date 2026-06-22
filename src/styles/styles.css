@@ -637,12 +637,6 @@ envelope:hover {
   width: 100%;
 }
 
-.almanac {
-  width: 850px;
-  height: auto;
-  margin-bottom: -250px;
-}
-
 /* IMPORTANT: make book a positioning reference */
 /* BOOK BASE */
 .book-wrapper {
@@ -653,7 +647,7 @@ envelope:hover {
 
 /* BOOK IMAGE */
 .almanac {
-  width: 850px;
+  width: 900px;
   height: auto;
   margin-bottom: -250px;
   display: block;
