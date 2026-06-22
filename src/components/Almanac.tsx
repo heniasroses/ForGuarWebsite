@@ -59,8 +59,9 @@ export default function Almanac() {
           {/* LEFT PAGE - PNG BUTTONS */}
           <div className="leftPageOverlay">
 
-            <div className="row3">
-              {entries.slice(0, 3).map((entry) => (
+            {/* ROW 1 = 2 */}
+            <div className="row2">
+              {entries.slice(0, 2).map((entry) => (
                 <button
                   key={entry.id}
                   className="diamondBtn"
@@ -71,8 +72,9 @@ export default function Almanac() {
               ))}
             </div>
 
+            {/* ROW 2 = 4 */}
             <div className="row4">
-              {entries.slice(3, 7).map((entry) => (
+              {entries.slice(2, 6).map((entry) => (
                 <button
                   key={entry.id}
                   className="diamondBtn"
@@ -83,8 +85,9 @@ export default function Almanac() {
               ))}
             </div>
 
+            {/* ROW 3 = 3 */}
             <div className="row3">
-              {entries.slice(7, 10).map((entry) => (
+              {entries.slice(6, 9).map((entry) => (
                 <button
                   key={entry.id}
                   className="diamondBtn"
@@ -95,8 +98,9 @@ export default function Almanac() {
               ))}
             </div>
 
+            {/* ROW 4 = 4 */}
             <div className="row4">
-              {entries.slice(10, 14).map((entry) => (
+              {entries.slice(9, 13).map((entry) => (
                 <button
                   key={entry.id}
                   className="diamondBtn"
