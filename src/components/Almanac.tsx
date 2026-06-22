@@ -124,11 +124,17 @@ export default function Almanac() {
                   <i>{selected.scientific_name}</i>
                 </p>
 
-                <p>{selected.description}</p>
+                
 
-                <p><b>Habitat:</b> {selected.habitat}</p>
-                <p><b>Population:</b> {selected.population}</p>
-                <p><b>Status:</b> {selected.conservation_status}</p>
+                <div className="animalStats">
+                  <p><b>Habitat:</b> {selected.habitat}</p>
+                  <p><b>Population:</b> {selected.population}</p>
+                  <p><b>Status:</b> {selected.conservation_status}</p>
+                </div>
+
+                <p className="description">
+                  {selected.description}
+                </p>
               </>
             )}
 
