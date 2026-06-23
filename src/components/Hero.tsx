@@ -17,7 +17,7 @@ export default function Hero() {
         </p>
 
         <a
-          href="/downloads/ForestGuardiansSetup.exe"
+          href="/downloads/Forest Guardians.exe"
           download
           className="btn play-btn"
         >
