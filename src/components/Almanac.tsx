@@ -38,26 +38,36 @@ export default function Almanac() {
     fetchEntries();
   }, []);
 
+  if (!selected) {
+    return (
+      <div className="container-fluid wildlife-almanc">
+        <h1 className="text-white wildlife">
+          <strong>WILDLIFE ALMANAC</strong>
+        </h1>
+        <p style={{ color: "white" }}>Loading entries...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container-fluid wildlife-almanc">
-
       <div className="flex-row justify-content-center align-items-center">
 
         <h1 className="text-white wildlife">
           <strong>WILDLIFE ALMANAC</strong>
         </h1>
 
-        {/* BOOK WRAPPER */}
+        {/* BOOK WRAPPER (IMPORTANT FIX) */}
         <div className="book-wrapper d-flex justify-content-center align-items-center book-div">
 
-          {/* BOOK IMAGE (unchanged) */}
+          {/* BOOK IMAGE */}
           <img
             className="img-fluid almanac"
             src="/img/Almanac.png"
             alt="Almanac"
           />
 
-          {/* LEFT PAGE - PNG BUTTONS */}
+          {/* LEFT PAGE - BUTTONS */}
           <div className="leftPageOverlay">
 
             {/* ROW 1 = 2 */}
@@ -65,10 +75,16 @@ export default function Almanac() {
               {entries.slice(0, 2).map((entry) => (
                 <button
                   key={entry.id}
-                  className="diamondBtn"
+                  className={`diamondBtn ${
+                    selected.id === entry.id ? "activeBtn" : ""
+                  }`}
                   onClick={() => setSelected(entry)}
                 >
-                  <img src={entry.image_url} className="almanacBtnImg" />
+                  <img
+                    src={entry.image_url}
+                    alt={entry.common_name}
+                    className="almanacBtnImg"
+                  />
                 </button>
               ))}
             </div>
@@ -78,10 +94,16 @@ export default function Almanac() {
               {entries.slice(2, 6).map((entry) => (
                 <button
                   key={entry.id}
-                  className="diamondBtn"
+                  className={`diamondBtn ${
+                    selected.id === entry.id ? "activeBtn" : ""
+                  }`}
                   onClick={() => setSelected(entry)}
                 >
-                  <img src={entry.image_url} className="almanacBtnImg" />
+                  <img
+                    src={entry.image_url}
+                    alt={entry.common_name}
+                    className="almanacBtnImg"
+                  />
                 </button>
               ))}
             </div>
@@ -91,10 +113,16 @@ export default function Almanac() {
               {entries.slice(6, 9).map((entry) => (
                 <button
                   key={entry.id}
-                  className="diamondBtn"
+                  className={`diamondBtn ${
+                    selected.id === entry.id ? "activeBtn" : ""
+                  }`}
                   onClick={() => setSelected(entry)}
                 >
-                  <img src={entry.image_url} className="almanacBtnImg" />
+                  <img
+                    src={entry.image_url}
+                    alt={entry.common_name}
+                    className="almanacBtnImg"
+                  />
                 </button>
               ))}
             </div>
@@ -104,10 +132,16 @@ export default function Almanac() {
               {entries.slice(9, 13).map((entry) => (
                 <button
                   key={entry.id}
-                  className="diamondBtn"
+                  className={`diamondBtn ${
+                    selected.id === entry.id ? "activeBtn" : ""
+                  }`}
                   onClick={() => setSelected(entry)}
                 >
-                  <img src={entry.image_url} className="almanacBtnImg" />
+                  <img
+                    src={entry.image_url}
+                    alt={entry.common_name}
+                    className="almanacBtnImg"
+                  />
                 </button>
               ))}
             </div>
@@ -117,38 +151,34 @@ export default function Almanac() {
           {/* RIGHT PAGE - INFO */}
           <div className="rightPageOverlay">
 
-            {selected && (
-            <>
+            {/* MAIN IMAGE */}
+            {selected.mainImage_url && (
               <img
                 src={selected.mainImage_url}
                 alt={selected.common_name}
-                className="animalMainImage"
+                className="animalMainImage mobileOnlyImage"
               />
-
-              <h2>{selected.common_name}</h2>
-
-              <p>
-                <i>{selected.scientific_name}</i>
-              </p>  
-
-                
-
-                <div className="animalStats">
-                  <p><b>Habitat:</b> {selected.habitat}</p>
-                  <p><b>Population:</b> {selected.population}</p>
-                  <p><b>Status:</b> {selected.conservation_status}</p>
-                </div>
-
-                <p className="description">
-                  {selected.description}
-                </p>
-              </>
             )}
+
+            <h2>{selected.common_name}</h2>
+
+            <p>
+              <i>{selected.scientific_name}</i>
+            </p>
+
+            <div className="animalStats">
+              <p><b>Habitat:</b> {selected.habitat}</p>
+              <p><b>Population:</b> {selected.population}</p>
+              <p><b>Status:</b> {selected.conservation_status}</p>
+            </div>
+
+            <p className="description">
+              {selected.description}
+            </p>
 
           </div>
 
         </div>
-
       </div>
     </div>
   );
