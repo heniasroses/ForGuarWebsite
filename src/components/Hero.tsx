@@ -17,7 +17,7 @@ export default function Hero() {
         </p>
 
         <a
-          href="/downloads/Forest Guardians.exe"
+          href="https://drive.google.com/file/d/1iM3DU02rxqgy3aQ-byNRwbFuXPJKFHcI/view?usp=sharing"
           download
           className="btn play-btn"
         >
