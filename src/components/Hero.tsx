@@ -17,8 +17,7 @@ export default function Hero() {
         </p>
 
         <a
-          href="https://drive.google.com/file/d/1iM3DU02rxqgy3aQ-byNRwbFuXPJKFHcI/view?usp=sharing"
-          download
+          href="https://drive.google.com/uc?export=download&id=1iM3DU02rxqgy3aQ-byNRwbFuXPJKFHcI"
           className="btn play-btn"
         >
           <span>PLAY FOR FREE</span>
