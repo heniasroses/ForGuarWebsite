@@ -16,9 +16,13 @@ export default function Hero() {
           Panoharra Tree from waves of cute, but destructive robots.
         </p>
 
-        <button className="btn play-btn" type="button">
+        <a
+          href="/downloads/ForestGuardiansSetup.exe"
+          download
+          className="btn play-btn"
+        >
           <span>PLAY FOR FREE</span>
-        </button>
+        </a>
 
       </div>
     </div>
