@@ -1,7 +1,9 @@
 import Link from "next/link";
+
 export default function Footer() {
   return (
     <div className="container-fluid Footer">
+
       <div className="d-flex flex-row justify-content-center align-items-center footerLogo">
         <img
           className="img-fluid"
@@ -20,35 +22,34 @@ export default function Footer() {
         />
       </div>
 
-      
-
       <div className="footerIcons">
-        
-        <Link href="/contact-us" >
-        <img
-          src="/img/icons/email.png"
-          alt="Email"
-          className="footer-icon"
-        />
+
+        <Link href="/contact-us">
+          <img
+            src="/img/icons/email.png"
+            alt="Email"
+            className="footer-icon"
+          />
         </Link>
+
         <a
           href="http://www.youtube.com/@HeniasRoses"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
-          src="/img/icons/youtube.png"
-          alt="YouTube"
-          className="footer-icon"
-        />
+            src="/img/icons/youtube.png"
+            alt="YouTube"
+            className="footer-icon"
+          />
         </a>
-        
 
         <img
           src="/img/icons/facebook.png"
           alt="Facebook"
           className="footer-icon"
         />
+
       </div>
 
       <div className="flex-row justify-content-center align-items-center">
@@ -65,6 +66,13 @@ export default function Footer() {
           in the Forest Logs forum.
         </p>
       </div>
+
+      <img
+        className="footerVineBorder"
+        src="/img/RoseVinesAsset.png"
+        alt="Decorative Border"
+      />
+
     </div>
   );
 }

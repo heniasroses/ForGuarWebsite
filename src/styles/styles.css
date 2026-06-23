@@ -885,6 +885,16 @@ envelope:hover {
   height: 36px;
 }
 
+.footerVineBorder {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+
+  height: auto;
+
+  clear: both;
+}
+
 .play4freeSection {
   padding: 0px;
   padding-top: 60px;
