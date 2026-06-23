@@ -715,7 +715,7 @@ envelope:hover {
 .rightPageOverlay {
   position: absolute;
 
-  top: 74%;   /* adjust this */
+  top: 24%;   /* adjust this */
   right: 78px;
 
   width: 38%;
@@ -726,7 +726,7 @@ envelope:hover {
 
 .rightPageOverlay h2 {
   font-size: 15px;
-  margin-top: 2px;
+  margin-top: 20px;
   margin-bottom: 11px;
   margin-left: 12px;
 }
@@ -751,6 +751,18 @@ envelope:hover {
 
 .animalStats p {
   margin-bottom: 8px;
+}
+
+.animalMainImage {
+  width: 90%;
+  height: 140px;
+
+  object-fit: cover;
+
+  margin: 0 auto 12px auto;
+  display: block;
+
+  border-radius: 8px;
 }
 
 /* BUTTON */

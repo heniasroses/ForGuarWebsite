@@ -13,6 +13,7 @@ type AlmanacEntry = {
   conservation_status: string;
   description: string;
   image_url: string;
+  mainImage_url: string;
 };
 
 export default function Almanac() {
@@ -117,12 +118,18 @@ export default function Almanac() {
           <div className="rightPageOverlay">
 
             {selected && (
-              <>
-                <h2>{selected.common_name}</h2>
+            <>
+              <img
+                src={selected.mainImage_url}
+                alt={selected.common_name}
+                className="animalMainImage"
+              />
 
-                <p>
-                  <i>{selected.scientific_name}</i>
-                </p>
+              <h2>{selected.common_name}</h2>
+
+              <p>
+                <i>{selected.scientific_name}</i>
+              </p>  
 
                 
 
