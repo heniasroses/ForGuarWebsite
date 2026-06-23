@@ -770,13 +770,34 @@ envelope:hover {
   width: 90px;
   height: 90px;
 
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: none;
+  background: transparent;
   border: none;
   padding: 0;
+
+  cursor: pointer;
+}
+
+.diamondBtn::before {
+  content: "";
+
+  position: absolute;
+
+  width: 64px;
+  height: 64px;
+
+  border: 2px solid #D1833E;
+
+  transform: rotate(45deg);
+
+  background: transparent;
+
+  pointer-events: none;
 }
 
 .almanacBtnImg {
