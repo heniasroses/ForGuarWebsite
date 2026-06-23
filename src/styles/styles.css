@@ -909,6 +909,15 @@ envelope:hover {
   z-index: 2;
 }
 
+.trailerBorder {
+  display: block;
+
+  width: 40%;
+  max-width: 900px; /* adjust */
+  margin-top: -130px;
+  height: auto;
+}
+
 .meetGuardians {
   padding: 0;
   background: url("/img/MeetGuardians.png");

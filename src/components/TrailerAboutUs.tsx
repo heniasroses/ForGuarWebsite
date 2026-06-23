@@ -1,6 +1,13 @@
 export default function TrailerAboutUs() {
   return (
     <div className="container-fluid AboutUstrailer">
+
+      <img
+        className="trailerBorder"
+        src="/img/RoseVinesAsset.png"
+        alt="Decorative Border"
+      />
+
       <div className="trailer-wrapper">
         <div className="video-box">
           <iframe
@@ -20,18 +27,19 @@ export default function TrailerAboutUs() {
               alt=""
             />
             <br />
-            THE TEAM  
+            THE TEAM
             <br />
             <br />
           </h1>
 
           <p className="text-center trailerParag">
-            A student-led game development studio from FEU Institute of Technology, 
-            founded in 2025. The studio is dedicated to turning meaningful stories into 
+            A student-led game development studio from FEU Institute of Technology,
+            founded in 2025. The studio is dedicated to turning meaningful stories into
             immersive interactive experiences through games.
           </p>
         </div>
       </div>
+
     </div>
   );
 }
