@@ -281,7 +281,7 @@ envelope:hover {
   font-weight: 700;
   color: white;
   margin: 0;
-  padding-top: 25px;
+  padding-top: 15px;
 }
 
 .line{
@@ -294,7 +294,7 @@ envelope:hover {
   font-weight: 700;
   color: white;
   margin: 0;
-  padding-bottom: 40px;
+  padding-bottom: 25px;
 }
 
 .guardian-specie {
@@ -305,12 +305,32 @@ envelope:hover {
   margin: 0;
 }
 
+.guardian-specie strong {
+  color: #90ff67;   
+}
+
+.guardian-abilities {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: left;
+  margin: 0;
+}
+
+.guardian-abilities strong {
+  color: #90ff67;
+}
+
 .guardian-desc {
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.95rem;
-  line-height: 2;
+  line-height: 1.6;
   text-align: left;
   margin: 0;
+}
+
+.guardian-desc strong {
+  color: #90ff67;
 }
 
 @media (max-width: 768px) {
@@ -320,20 +340,25 @@ envelope:hover {
     text-align: center;
     flex: 0 0 100%;
     scroll-snap-align: center;
+    justify-content: center;
   }
 
   .guardian-image {
+    display: flex;
     flex: unset;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .guardian-img {
+    width: clamp(160px, 55vw, 240px);
+    height: auto;
+    padding-bottom: 10px;
   }
 
   .guardian-info {
-    align-items: center;
     padding-top: 10px;
-  }
-
-  .guardian-specie,
-  .guardian-desc {
-    text-align: center;
   }
 
   .line {
@@ -366,7 +391,7 @@ envelope:hover {
     padding-bottom: 10px;
   }
 
-  .guardian-desc, .guardian-specie {
+  .guardian-desc, .guardian-specie, .guardian-abilities {
     font-size: 0.8rem;
   }
 }
@@ -468,39 +493,6 @@ envelope:hover {
   right: 40px;
 }
 
-@media (max-width: 768px) {
-  .guardian-card {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-    gap: 10px;
-  }
-
-  .guardian-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .guardian-img {
-    width: clamp(160px, 55vw, 240px);
-    height: auto;
-    padding-bottom: 10px;
-  }
-
-  .guardian-info {
-    align-items: center;
-    text-align: center;
-  }
-
-  .guardian-specie,
-  .guardian-desc {
-    text-align: center;
-  }
-}
 
 /* MOBILE BOTTOM ARROWS */
 .nav-bottom {
