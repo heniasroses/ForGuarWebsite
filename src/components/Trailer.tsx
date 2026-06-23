@@ -1,6 +1,7 @@
 export default function Trailer() {
   return (
     <div className="container-fluid trailer">
+
       <div className="trailer-wrapper">
         <div className="video-box">
           <iframe
@@ -31,6 +32,14 @@ export default function Trailer() {
           </p>
         </div>
       </div>
+
+      {/* NEW TEXT BELOW THE TRAILER WRAPPER */}
+      <div className="trailerDescription">
+        <p>
+          Forest Guardians is a 3D educational action game that combines engaging gameplay with environmental advocacy. Designed to raise awareness about wildlife conservation and biodiversity, the game introduces players to nature-inspired characters, ecological concepts, and the importance of protecting the environment. By transforming learning into an interactive experience, Forest Guardians seeks to cultivate appreciation for wildlife and encourage positive attitudes toward conservation.
+        </p>
+      </div>
+
     </div>
   );
 }
