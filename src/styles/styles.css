@@ -1056,6 +1056,14 @@ envelope:hover {
   .video-box {
     aspect-ratio: auto;
   }
+
+  .AboutUstrailer{
+    min-height: 0;
+  }
+
+  .aboutUs-container{
+    min-height: 0;
+  }
 }
 
 /* PHONE RESPONSIVE */
@@ -1334,6 +1342,7 @@ envelope:hover {
     justify-content: flex-start;
     margin-left: 0;
     padding: 68px 0 0 0;
+    min-height: 0;
   }
 
   .AboutUstrailer{
