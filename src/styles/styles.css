@@ -844,11 +844,13 @@ envelope:hover {
 }
 
 .footerParagraph {
-  max-width: 500px;
+  max-width: 700px;
   line-height: 1;
-  margin-top: 20px;
   font-family: 'Inter';
+  font-size: 13px;
   color: #ffff;
+  padding: 20px;
+  margin-bottom: 0;
 }
 
 .footerIcons {
@@ -856,7 +858,6 @@ envelope:hover {
   justify-content: center;
   align-items: center;
   gap: 60px;
-  margin: 30px 0;
 }
 
 .footer-icon {

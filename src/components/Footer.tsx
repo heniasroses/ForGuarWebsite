@@ -20,6 +20,15 @@ export default function Footer() {
         />
       </div>
 
+      <div className="flex-row justify-content-center align-items-center">
+        <p className="footerParagraph">
+          Forest Guardians is an educational capstone project developed to promote awareness of Philippine biodiversity and 
+          environmental conservation. Wildlife information, media, and downloadable content are provided for educational and 
+          research purposes. Users are expected to use the website responsibly and follow community guidelines when participating 
+          in the Forest Logs forum.
+        </p>
+      </div>
+
       <div className="footerIcons">
         
         <Link href="/contact-us" >
