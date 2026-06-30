@@ -1830,6 +1830,10 @@ textarea {
   .heroSubtitle{
     max-width: 120vh;
   }
+
+  .trailer{
+    margin-top: -85px;
+  }
 }
 
 .forestLogContent {
