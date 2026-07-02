@@ -39,7 +39,7 @@ export default function AdminPage() {
       } = await supabase.auth.getUser();
 
       if (!user) {
-        router.push("/auth");
+        router.push("/");
         return;
       }
 

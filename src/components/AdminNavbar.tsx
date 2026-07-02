@@ -12,7 +12,7 @@ export default function AdminNavbar() {
     // FULL RESET (important fix)
     await supabase.auth.getSession();
 
-    router.replace("/auth");
+    router.replace("/");
     router.refresh();
   };
 
