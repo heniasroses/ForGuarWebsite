@@ -306,7 +306,7 @@ export default function AdminAlmanac() {
                       className="viewBtn"
                       onClick={() => openEditModal(entry)}
                     >
-                      View
+                        Edit
                     </button>
 
                     <button
