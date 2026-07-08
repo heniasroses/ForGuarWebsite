@@ -2729,11 +2729,15 @@ textarea {
   padding-top: 180px;
 }
 
+.adminAlmanac {
+  padding-top: 100px;
+}
+
 /* =========================
    FILTERS
 ========================= */
 
-.forestLogFilters {
+.forestLogFiltersAdmin {
   display: flex;
   justify-content: space-between;
   align-items: center;

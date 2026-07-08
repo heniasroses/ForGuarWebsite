@@ -140,9 +140,9 @@ export default function AdminPage() {
           </h3>
           <h3
             className={`adminSidebarItem ${
-              pathname.includes("/almanac") ? "activeSidebar" : ""
+              pathname.includes("/admin/almanac") ? "activeSidebar" : ""
             }`}
-            onClick={() => router.push("/almanac")}
+            onClick={() => router.push("/admin/almanac")}
           >
             Almanac
           </h3>
