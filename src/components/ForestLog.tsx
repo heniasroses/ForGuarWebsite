@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { motion, type Variants } from "framer-motion";
 import { supabase } from "../../lib/supabase";
 import CreateLogModal from "@/components/CreateLogModal";
 import AuthModal from "@/components/AuthModal";
@@ -19,6 +20,76 @@ type Category = {
   name: string;
 };
 
+const heroVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+const contentVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const filterRowVariants: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.55,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+const cardGridVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 24, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.45,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+const emptyVariants: Variants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
 export default function ForestLog() {
   const [logs, setLogs] = useState<Log[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,22 +101,20 @@ export default function ForestLog() {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   const addNewLog = (newLog: Log) => {
-  setLogs((prev) => [newLog, ...prev]);
+    setLogs((prev) => [newLog, ...prev]);
   };
 
   useEffect(() => {
-  const { data: listener } = supabase.auth.onAuthStateChange(() => {
-    // DO NOTHING UI-RELATED HERE
-    // only logging or syncing if needed
-  });
+    const { data: listener } = supabase.auth.onAuthStateChange(() => {
+      // keep UI stable; no action needed here
+    });
 
-  return () => {
-    listener.subscription.unsubscribe();
-  };
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   // FETCH CATEGORIES
-
   useEffect(() => {
     const fetchCategories = async () => {
       const { data } = await supabase
@@ -100,14 +169,16 @@ export default function ForestLog() {
   }, []);
 
   const handleCreateClick = async () => {
-  const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-  if (!session) {
-    setShowAuthModal(true);
-    return;
-  }
+    if (!session) {
+      setShowAuthModal(true);
+      return;
+    }
 
-  setShowCreateLog(true);
+    setShowCreateLog(true);
   };
 
   const filteredLogs =
@@ -117,65 +188,100 @@ export default function ForestLog() {
 
   return (
     <div className="container-fluid forestLogContainer">
-
       {/* HERO */}
-      <section className="forestLogHero">
-        <div className="heroText">
+      <motion.section
+        className="forestLogHero"
+        initial="hidden"
+        animate="visible"
+        variants={heroVariants}
+      >
+        <motion.div className="heroText" variants={heroVariants}>
           <h1>Forest Logs</h1>
           <p>Restore the forest. Rewrite tomorrow.</p>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* CONTENT */}
-      <section className="forestLogContent">
-
+      <motion.section
+        className="forestLogContent"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={contentVariants}
+      >
         {/* FILTERS */}
-        <div className="forestLogFilters">
-
+        <motion.div className="forestLogFilters" variants={filterRowVariants}>
           <div className="leftFilters">
-
-            <button
-              className={`ForGuarButtons ${selectedCategory === "all" ? "activeFilter" : ""}`}
+            <motion.button
+              className={`ForGuarButtons ${
+                selectedCategory === "all" ? "activeFilter" : ""
+              }`}
               onClick={() => setSelectedCategory("all")}
+              whileHover={{ y: -2, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               All
-            </button>
+            </motion.button>
 
             {categories.map((cat) => (
-              <button
+              <motion.button
                 key={cat.id}
                 className={`ForGuarButtons ${
                   selectedCategory === cat.name ? "activeFilter" : ""
                 }`}
                 onClick={() => setSelectedCategory(cat.name)}
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {cat.name}
-              </button>
+              </motion.button>
             ))}
-
           </div>
 
-          <button
+          <motion.button
             className="ForGuarButtons createLogButton"
             onClick={handleCreateClick}
+            whileHover={{ y: -2, scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
           >
             + Create Log
-          </button>
+          </motion.button>
+        </motion.div>
 
-        </div>
-
-        {/* CONTENT */}
+        {/* CONTENT STATES */}
         {loading ? (
-          <p style={{ color: "white" }}>Loading logs...</p>
+          <motion.p
+            style={{ color: "white" }}
+            initial="hidden"
+            animate="visible"
+            variants={emptyVariants}
+          >
+            Loading logs...
+          </motion.p>
         ) : filteredLogs.length === 0 ? (
-          <div className="emptyLogs">
+          <motion.div
+            className="emptyLogs"
+            initial="hidden"
+            animate="visible"
+            variants={emptyVariants}
+          >
             <h2>No forest whispers found 🌿</h2>
             <p>Try another category or create a new log.</p>
-          </div>
+          </motion.div>
         ) : (
-          <div className="logsGrid">
+          <motion.div
+            className="logsGrid"
+            initial="hidden"
+            animate="visible"
+            variants={cardGridVariants}
+          >
             {filteredLogs.map((log) => (
-              <div className="forestLogCard" key={log.id}>
+              <motion.div
+                className="forestLogCard"
+                key={log.id}
+                variants={cardVariants}
+                whileHover={{ y: -6, scale: 1.01 }}
+              >
                 <h2>{log.title}</h2>
 
                 <p className="author">
@@ -187,12 +293,11 @@ export default function ForestLog() {
                 <Link href={`/forest-log/${log.id}`}>
                   <button className="viewLogButton">View Log</button>
                 </Link>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
-
-      </section>
+      </motion.section>
 
       {/* MODALS */}
       {showCreateLog && (
@@ -202,10 +307,7 @@ export default function ForestLog() {
         />
       )}
 
-      {showAuthModal && (
-        <AuthModal onClose={() => setShowAuthModal(false)} />
-      )}
-
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
     </div>
   );
 }
