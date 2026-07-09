@@ -3,7 +3,7 @@
 }
 
 body{
-  background-color: #181818;
+  background-color: #1D1C20;
 }
 
 .playButton {
@@ -2651,23 +2651,6 @@ textarea {
   color: #213D22;
 }
 
-/* LEFT ACCENT BAR FOR ACTIVE ITEM */
-.adminSidebarItem.active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 10%;
-  height: 80%;
-  width: 4px;
-  background: #213D22;
-  border-radius: 0 4px 4px 0;
-}
-
-/* OPTIONAL: ACTIVE HOVER FEEL */
-.adminSidebarItem.active:hover {
-  background: rgba(33, 61, 34, 0.18);
-}
-
 /* active filter pill */
 .activeFilter {
   background: #90FF67 !important;
@@ -2678,8 +2661,8 @@ textarea {
 .activeSidebar {
   background: rgba(33, 61, 34, 0.31);
   color: #213D22;
-  border-radius: 8px;
-  padding: 10px 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
 }
 
 /* =========================
