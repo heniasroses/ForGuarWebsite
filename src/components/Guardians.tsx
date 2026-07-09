@@ -1,33 +1,61 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { supabase } from "../../lib/supabase";
 import GuardianModel from "../components/GuardianModel";
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, x: 30, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      duration: 0.45,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    x: -30,
+    scale: 0.98,
+    transition: {
+      duration: 0.3,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+const titleVariants: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
 
 export default function Guardians() {
   const [index, setIndex] = useState(0);
   const [guardians, setGuardians] = useState<any[]>([]);
 
   useEffect(() => {
-  const fetchGuardians = async () => {
-    console.log("FETCHING GUARDIANS...");
+    const fetchGuardians = async () => {
+      const { data, error } = await supabase.from("guardians").select("*");
 
-    const { data, error } = await supabase
-      .from("guardians")
-      .select("*");
+      if (error) {
+        console.log("GUARDIANS ERROR:", error);
+        return;
+      }
 
-    console.log("DATA:", data);
-    console.log("ERROR:", error);
+      setGuardians(data || []);
+    };
 
-    if (error) {
-      console.log("GUARDIANS ERROR:", error);
-      return;
-    }
-
-    setGuardians(data || []);
-  };
-
-  fetchGuardians();
+    fetchGuardians();
   }, []);
 
   const next = () => {
@@ -47,71 +75,72 @@ export default function Guardians() {
   const g = guardians[index];
 
   return (
-    <div className="container-fluid meetGuardians">
+    <motion.div
+      className="container-fluid meetGuardians"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={titleVariants}
+    >
       <h1 className="meet">
         <strong>MEET THE GUARDIANS</strong>
       </h1>
 
       <section className="carouselSection">
-
-        {/* LEFT ARROW */}
         <button className="nav-arrow nav-left" onClick={prev}>
           <img src="/img/arrow-left.png" alt="left" />
         </button>
 
-        {/* CARD */}
-        <div className="guardian-card">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={g.id ?? index}
+            className="guardian-card"
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <div className="guardian-image">
+              <img
+                src={g.image_url || "/img/blankGuardian.png"}
+                className="guardian-img"
+                alt={g.name}
+              />
 
-          {/* IMAGE + 3D LAYER */}
-          <div className="guardian-image">
+              {g.model_url && (
+                <div className="guardian-model-overlay">
+                  <GuardianModel url={g.model_url} />
+                </div>
+              )}
+            </div>
 
-            {/* PNG FRAME (always visible) */}
-            <img
-              src={g.image_url || "/img/blankGuardian.png"}
-              className="guardian-img"
-              alt={g.name}
-            />
+            <div className="guardian-info">
+              <h1 className="guardian-name">{g.name}</h1>
 
-            {/* 3D MODEL OVERLAY (only if exists) */}
-            {g.model_url && (
-              <div className="guardian-model-overlay">
-                <GuardianModel url={g.model_url} />
-              </div>
-            )}
+              <img className="line" src="/img/Line 1.png" alt="" />
 
-          </div>
+              <h1 className="guardian-title">{g.title}</h1>
 
-          {/* INFO */}
-          <div className="guardian-info">
-            <h1 className="guardian-name">{g.name}</h1>
+              <p className="guardian-specie">
+                <strong>Species:</strong> {g.species_based_on}
+              </p>
 
-            <img className="line" src="/img/Line 1.png" alt="" />
+              <p className="guardian-abilities">
+                <strong>Abilities:</strong> {g.abilities}
+              </p>
 
-            <h1 className="guardian-title">{g.title}</h1>
+              <p className="guardian-desc">
+                <strong>Story: </strong>{g.story}
+              </p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
-            <p className="guardian-specie">
-              <strong>Species:</strong> {g.species_based_on}
-            </p>
-
-            <p className="guardian-abilities">
-              <strong>Abilities:</strong> {g.abilities}
-            </p>
-
-            <p className="guardian-desc">
-              <strong>Story: </strong>{g.story}
-            </p>
-          </div>
-
-        </div>
-
-        {/* RIGHT ARROW */}
         <button className="nav-arrow nav-right" onClick={next}>
           <img src="/img/arrow-right.png" alt="right" />
         </button>
-
       </section>
 
-      {/* MOBILE ARROWS */}
       <div className="nav-bottom">
         <button onClick={prev}>
           <img src="/img/arrow-left.png" alt="left" />
@@ -121,6 +150,6 @@ export default function Guardians() {
           <img src="/img/arrow-right.png" alt="right" />
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
