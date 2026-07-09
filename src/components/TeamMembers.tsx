@@ -1,3 +1,7 @@
+"use client";
+
+import { motion, type Variants } from "framer-motion";
+
 export default function Team() {
   const members = [
     {
@@ -22,23 +26,55 @@ export default function Team() {
     },
   ];
 
+  const container: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const card: Variants = {
+    hidden: { opacity: 0, y: 30, scale: 0.96 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: [0.25, 0.1, 0.25, 1],
+      },
+    },
+  };
+
   return (
     <div className="container-fluid Team-container">
-      <div className="row team-row">
+      <motion.div
+        className="row team-row"
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {members.map((member, index) => (
-          <div key={index} className="col-xl-3 col-md-6 team-member">
+          <motion.div
+            key={index}
+            className="col-xl-3 col-md-6 team-member"
+            variants={card}
+            whileHover={{ y: -6, scale: 1.02 }}
+          >
             <img src={member.image} alt={member.name} className="team-image" />
-
             <h4>{member.name}</h4>
-
             <p className="team-roles">
               {member.roles.map((role, i) => (
                 <span key={i}>{role}</span>
               ))}
             </p>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }
