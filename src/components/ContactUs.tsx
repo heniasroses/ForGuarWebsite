@@ -1,6 +1,54 @@
 "use client";
 
 import { useState } from "react";
+import { motion, type Variants } from "framer-motion";
+
+const rowVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const leftVariants: Variants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.65,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+const rightVariants: Variants = {
+  hidden: { opacity: 0, x: 30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.65,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+const fieldVariants: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
 
 export default function ContactUs() {
   const [firstName, setFirstName] = useState("");
@@ -37,7 +85,6 @@ export default function ContactUs() {
         }
       );
 
-      // 🔥 IMPORTANT: read actual response (for debugging)
       const text = await res.text();
       console.log("EDGE FUNCTION RESPONSE:", text);
 
@@ -47,7 +94,6 @@ export default function ContactUs() {
 
       alert("Message sent successfully!");
 
-      // clear form
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -66,29 +112,38 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="contactUsContainer">
+    <motion.div
+      className="contactUsContainer"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={rowVariants}
+    >
       <div className="contactUsRow">
-
         {/* LEFT SIDE */}
-        <div className="contactLeft">
+        <motion.div className="contactLeft" variants={leftVariants}>
           <h1>Get in Touch with Us!</h1>
 
           <p>
             If you have any inquiries or just want to say hi, please use the contact form!
-            <br /><br />
+            <br />
+            <br />
             <b>Email:</b> heniasroses@gmail.com
             <br />
-            <b>Youtube:</b> Henia's Roses
+            <b>Youtube:</b> Henia&apos;s Roses
             <br />
-            <b>Facebook:</b> Henia's Roses
+            <b>Facebook:</b> Henia&apos;s Roses
           </p>
-        </div>
+        </motion.div>
 
         {/* RIGHT SIDE */}
-        <div className="contactRight">
-          <form className="contactForm" onSubmit={handleSubmit}>
-
-            <div className="rowTwoInputs">
+        <motion.div className="contactRight" variants={rightVariants}>
+          <motion.form
+            className="contactForm"
+            onSubmit={handleSubmit}
+            variants={rowVariants}
+          >
+            <motion.div className="rowTwoInputs" variants={fieldVariants}>
               <div>
                 <label>First Name</label>
                 <input
@@ -108,9 +163,9 @@ export default function ContactUs() {
                   placeholder="Your Last Name"
                 />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="fullInput">
+            <motion.div className="fullInput" variants={fieldVariants}>
               <label>Email</label>
               <input
                 type="email"
@@ -118,29 +173,30 @@ export default function ContactUs() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="FirstLast@gmail.com"
               />
-            </div>
+            </motion.div>
 
-            <div className="fullInput">
+            <motion.div className="fullInput" variants={fieldVariants}>
               <label>Message</label>
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Hi! I love your game!"
               />
-            </div>
+            </motion.div>
 
-            <button
+            <motion.button
               type="submit"
               className="buttonContact"
               disabled={loading}
+              variants={fieldVariants}
+              whileHover={{ y: -2, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               {loading ? "Sending..." : "Send"}
-            </button>
-
-          </form>
-        </div>
-
+            </motion.button>
+          </motion.form>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
