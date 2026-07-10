@@ -8,95 +8,175 @@ type SignupFormProps = {
   onClose: () => void;
 };
 
-export default function SignupForm({
-  onLogin,
-  onClose,
-}: SignupFormProps) {
+type Errors = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  form: string;
+};
+
+export default function SignupForm({ onLogin, onClose }: SignupFormProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = async () => {
-    if (!username || !email || !password || !confirmPassword) {
-      alert("Please complete all fields.");
-      return;
+  const [errors, setErrors] = useState<Errors>({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    form: "",
+  });
+
+  const validate = () => {
+    const newErrors: Errors = {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      form: "",
+    };
+
+    let hasError = false;
+
+    if (!username.trim()) {
+      newErrors.username = "Username is required.";
+      hasError = true;
+    } else if (username.trim().length < 3) {
+      newErrors.username = "Username must be at least 3 characters.";
+      hasError = true;
     }
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
+    if (!email.trim()) {
+      newErrors.email = "Email is required.";
+      hasError = true;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email.";
+      hasError = true;
     }
+
+    if (!password.trim()) {
+      newErrors.password = "Password is required.";
+      hasError = true;
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters.";
+      hasError = true;
+    }
+
+    if (!confirmPassword.trim()) {
+      newErrors.confirmPassword = "Please confirm your password.";
+      hasError = true;
+    } else if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match.";
+      hasError = true;
+    }
+
+    setErrors(newErrors);
+    return !hasError;
+  };
+
+  const handleSignup = async () => {
+    if (!validate()) return;
 
     setLoading(true);
+    setErrors((prev) => ({ ...prev, form: "" }));
 
-    // Create auth user
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          username,
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username,
+          },
         },
-      },
-    });
+      });
 
-    if (error) {
-      alert(error.message);
+      if (error) {
+        setErrors((prev) => ({
+          ...prev,
+          form: error.message,
+        }));
+        setLoading(false);
+        return;
+      }
+
+      if (data.user) {
+        const { error: profileError } = await supabase.from("profiles").insert([
+          {
+            id: data.user.id,
+            username,
+            email,
+          },
+        ]);
+
+        if (profileError) {
+          setErrors((prev) => ({
+            ...prev,
+            form: profileError.message,
+          }));
+          setLoading(false);
+          return;
+        }
+      }
+
       setLoading(false);
-      return;
+      onClose();
+    } catch (error) {
+      setErrors((prev) => ({
+        ...prev,
+        form:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
+      }));
+      setLoading(false);
     }
-
-    // Save profile
-    if (data.user) {
-      await supabase.from("profiles").insert([
-        {
-          id: data.user.id,
-          username,
-          email,
-        },
-      ]);
-    }
-
-    setLoading(false);
-
-    alert("Account created! Please check your email to verify your account.");
-
-    // Close modal after successful signup
-    onClose();
   };
 
   return (
     <div className="authWrapper">
-
       <div className="authBox signupBox">
-        <button
-          className="authCloseBtn"
-          onClick={onClose}
-        >
+        <button className="authCloseBtn" onClick={onClose}>
           ✕
         </button>
 
-        <img
-          src="/img/rose.png"
-          className="authRose"
-          alt="Rose"
-        />
+
+        {errors.form && <div className="authErrorBox">{errors.form}</div>}
+
         <div className="authField">
           <label>Username</label>
           <input
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              if (errors.username) {
+                setErrors((prev) => ({ ...prev, username: "" }));
+              }
+            }}
+            className={errors.username ? "inputError" : ""}
+            placeholder="Enter your username"
           />
+          {errors.username && <span className="errorText">{errors.username}</span>}
         </div>
 
         <div className="authField">
           <label>Email</label>
           <input
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (errors.email) {
+                setErrors((prev) => ({ ...prev, email: "" }));
+              }
+            }}
+            className={errors.email ? "inputError" : ""}
+            placeholder="Enter your email"
           />
+          {errors.email && <span className="errorText">{errors.email}</span>}
         </div>
 
         <div className="authField">
@@ -104,8 +184,16 @@ export default function SignupForm({
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (errors.password) {
+                setErrors((prev) => ({ ...prev, password: "" }));
+              }
+            }}
+            className={errors.password ? "inputError" : ""}
+            placeholder="Create a password"
           />
+          {errors.password && <span className="errorText">{errors.password}</span>}
         </div>
 
         <div className="authField">
@@ -113,24 +201,27 @@ export default function SignupForm({
           <input
             type="password"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+              if (errors.confirmPassword) {
+                setErrors((prev) => ({ ...prev, confirmPassword: "" }));
+              }
+            }}
+            className={errors.confirmPassword ? "inputError" : ""}
+            placeholder="Re-enter your password"
           />
+          {errors.confirmPassword && (
+            <span className="errorText">{errors.confirmPassword}</span>
+          )}
         </div>
 
-        <button
-          className="loginBtn"
-          onClick={handleSignup}
-          disabled={loading}
-        >
+        <button className="loginBtn" onClick={handleSignup} disabled={loading}>
           {loading ? "Creating..." : "Sign Up"}
         </button>
 
         <p className="signupText">
           Already have an account?{" "}
-          <span
-            style={{ cursor: "pointer" }}
-            onClick={onLogin}
-          >
+          <span style={{ cursor: "pointer" }} onClick={onLogin}>
             Log In
           </span>
         </p>

@@ -9,6 +9,12 @@ type LoginFormProps = {
   onSignup: () => void;
 };
 
+type Errors = {
+  email: string;
+  password: string;
+  form: string;
+};
+
 export default function LoginForm({
   onClose,
   onSignup,
@@ -17,15 +23,46 @@ export default function LoginForm({
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [errors, setErrors] = useState<Errors>({
+    email: "",
+    password: "",
+    form: "",
+  });
+
   const router = useRouter();
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      alert("Fill all fields");
-      return;
+  const validate = () => {
+    const newErrors: Errors = {
+      email: "",
+      password: "",
+      form: "",
+    };
+
+    let hasError = false;
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required.";
+      hasError = true;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email.";
+      hasError = true;
     }
 
+    if (!password.trim()) {
+      newErrors.password = "Password is required.";
+      hasError = true;
+    }
+
+    setErrors(newErrors);
+
+    return !hasError;
+  };
+
+  const handleLogin = async () => {
+    if (!validate()) return;
+
     setLoading(true);
+    setErrors((prev) => ({ ...prev, form: "" }));
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -33,7 +70,11 @@ export default function LoginForm({
     });
 
     if (error) {
-      alert(error.message);
+      setErrors((prev) => ({
+        ...prev,
+        form: error.message,
+      }));
+
       setLoading(false);
       return;
     }
@@ -41,6 +82,11 @@ export default function LoginForm({
     const user = data.user;
 
     if (!user) {
+      setErrors((prev) => ({
+        ...prev,
+        form: "Unable to log in.",
+      }));
+
       setLoading(false);
       return;
     }
@@ -54,17 +100,19 @@ export default function LoginForm({
       .single();
 
     if (profileError || !profile) {
-      alert("Failed to get user role");
+      setErrors((prev) => ({
+        ...prev,
+        form: "Failed to get user role.",
+      }));
+
       setLoading(false);
       return;
     }
 
     setLoading(false);
 
-    // Close the modal first
     onClose();
 
-    // Redirect exactly like your current page
     if (profile.role === "admin") {
       router.replace("/admin");
     } else {
@@ -96,15 +144,38 @@ export default function LoginForm({
             src="/img/rose.png"
             className="authRose"
             alt="Rose"
-           />
+          />
+
+          {errors.form && (
+            <div className="authErrorBox">
+              {errors.form}
+            </div>
+          )}
 
           <div className="authField">
             <label>Email</label>
 
             <input
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className={errors.email ? "inputError" : ""}
+              onChange={(e) => {
+                setEmail(e.target.value);
+
+                if (errors.email) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    email: "",
+                  }));
+                }
+              }}
             />
+
+            {errors.email && (
+              <span className="errorText">
+                {errors.email}
+              </span>
+            )}
           </div>
 
           <div className="authField">
@@ -113,8 +184,25 @@ export default function LoginForm({
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              className={errors.password ? "inputError" : ""}
+              onChange={(e) => {
+                setPassword(e.target.value);
+
+                if (errors.password) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    password: "",
+                  }));
+                }
+              }}
             />
+
+            {errors.password && (
+              <span className="errorText">
+                {errors.password}
+              </span>
+            )}
           </div>
 
           <button
