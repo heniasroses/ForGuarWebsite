@@ -109,7 +109,19 @@ export default function Guardians() {
 
               {g.model_url && (
                 <div className="guardian-model-overlay">
-                  <GuardianModel url={g.model_url} />
+                  <GuardianModel
+                    url={g.model_url}
+                    modelScale={
+                      g.model_url.includes("MariWebsiteIDLE")
+                        ? 1.2
+                        : 2.2
+                    }
+                    modelOffset={
+                      g.model_url.includes("MariWebsiteIDLE")
+                        ? [0, -0.1, 0]
+                        : [0, 0, 0]
+                    }
+                  />
                 </div>
               )}
             </div>

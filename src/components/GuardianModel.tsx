@@ -5,7 +5,15 @@ import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Suspense, useEffect, useRef } from "react";
 import * as THREE from "three";
 
-function Model({ url }: { url: string }) {
+function Model({
+  url,
+  modelScale = 2.2,
+  modelOffset = [0, 0, 0],
+}: {
+  url: string;
+  modelScale?: number;
+  modelOffset?: [number, number, number];
+}) {
   const { scene, animations } = useGLTF(url);
 
   const groupRef = useRef<THREE.Group>(null);
@@ -29,11 +37,14 @@ useEffect(() => {
   // =========================
   const box = new THREE.Box3().setFromObject(model);
   const center = box.getCenter(new THREE.Vector3());
-  model.position.set(-center.x, -center.y, -center.z);
-
+  model.position.set(
+    -center.x + modelOffset[0],
+    -center.y + modelOffset[1],
+    -center.z + modelOffset[2]
+  );
   const size = box.getSize(new THREE.Vector3());
   const maxDim = Math.max(size.x, size.y, size.z);
-  model.scale.setScalar(2.2 / maxDim);
+  model.scale.setScalar(modelScale / maxDim);
 
   groupRef.current.add(model);
 
@@ -69,7 +80,15 @@ useEffect(() => {
   return <group ref={groupRef} position={[0, 0, 0]} />;
 }
 
-export default function GuardianModel({ url }: { url: string }) {
+export default function GuardianModel({
+  url,
+  modelScale,
+  modelOffset,
+}: {
+  url: string;
+  modelScale?: number;
+  modelOffset?: [number, number, number];
+}) {
   return (
     <div className="guardian-model-wrapper">
       <Canvas camera={{ position: [0, 0, 4], fov: 23 }}>
@@ -77,7 +96,11 @@ export default function GuardianModel({ url }: { url: string }) {
         <directionalLight position={[3, 3, 3]} intensity={2} />
 
         <Suspense fallback={null}>
-          <Model url={url} />
+          <Model
+            url={url}
+            modelScale={modelScale}
+            modelOffset={modelOffset}
+          />
         </Suspense>
 
         <OrbitControls
