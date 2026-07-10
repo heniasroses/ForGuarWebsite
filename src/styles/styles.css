@@ -1652,6 +1652,86 @@ textarea {
   transform: translateY(-2px);
 }
 
+.contactPopupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.contactPopupBox {
+  width: min(90vw, 420px);
+  background: #181818;
+  color: white;
+  border-radius: 18px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid #90FF67;
+}
+
+.contactPopupBox.success h2 {
+  color: #90FF67;
+}
+
+.contactPopupBox.error h2 {
+  color: #ff7a7a;
+}
+
+.contactPopupBox p {
+  margin: 12px 0 20px;
+  line-height: 1.5;
+}
+
+.contactPopupBtn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  background: #90FF67;
+  color: #000;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.inputError {
+  border: 2px solid #ff4d4f !important;
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.12);
+}
+
+.errorText {
+  display: block;
+  margin-top: 6px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.formSuccess {
+  background: rgba(129, 226, 94, 0.12);
+  border: 1px solid #81e25e;
+  color: #81e25e;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.formErrorBox {
+  background: rgba(255, 107, 107, 0.12);
+  border: 1px solid #ff6b6b;
+  color: #ff6b6b;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  text-align: center;
+  font-weight: 600;
+}
+
 /* ========================= */
 /* TABLET */
 /* ========================= */

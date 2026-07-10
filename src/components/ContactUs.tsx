@@ -50,6 +50,13 @@ const fieldVariants: Variants = {
   },
 };
 
+type Errors = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  message: string;
+};
+
 export default function ContactUs() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -57,14 +64,53 @@ export default function ContactUs() {
   const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errors, setErrors] = useState<Errors>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !email || !message) {
-      alert("Please fill in all fields.");
-      return;
+    const newErrors: Errors = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      message: "",
+    };
+
+    let hasError = false;
+
+    if (!firstName.trim()) {
+      newErrors.firstName = "First name is required.";
+      hasError = true;
     }
+
+    if (!lastName.trim()) {
+      newErrors.lastName = "Last name is required.";
+      hasError = true;
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required.";
+      hasError = true;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email.";
+      hasError = true;
+    }
+
+    if (!message.trim()) {
+      newErrors.message = "Message cannot be empty.";
+      hasError = true;
+    }
+
+    setErrors(newErrors);
+    setSuccessMessage("");
+
+    if (hasError) return;
 
     setLoading(true);
 
@@ -92,16 +138,21 @@ export default function ContactUs() {
         throw new Error(text || "Failed to send email");
       }
 
-      alert("Message sent successfully!");
+      setSuccessMessage("Your message has been sent successfully!");
 
       setFirstName("");
       setLastName("");
       setEmail("");
       setMessage("");
+      setErrors({
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: "",
+      });
     } catch (error) {
       console.log("FULL ERROR:", error);
-
-      alert(
+      setSuccessMessage(
         error instanceof Error
           ? error.message
           : "Something went wrong. Please try again."
@@ -143,15 +194,36 @@ export default function ContactUs() {
             onSubmit={handleSubmit}
             variants={rowVariants}
           >
+            {successMessage && (
+              <div
+                className={
+                  successMessage === "Your message has been sent successfully!"
+                    ? "formSuccess"
+                    : "formErrorBox"
+                }
+              >
+                {successMessage}
+              </div>
+            )}
+
             <motion.div className="rowTwoInputs" variants={fieldVariants}>
               <div>
                 <label>First Name</label>
                 <input
                   type="text"
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    if (errors.firstName) {
+                      setErrors((prev) => ({ ...prev, firstName: "" }));
+                    }
+                  }}
                   placeholder="Your First Name"
+                  className={errors.firstName ? "inputError" : ""}
                 />
+                {errors.firstName && (
+                  <span className="errorText">{errors.firstName}</span>
+                )}
               </div>
 
               <div>
@@ -159,9 +231,18 @@ export default function ContactUs() {
                 <input
                   type="text"
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                    if (errors.lastName) {
+                      setErrors((prev) => ({ ...prev, lastName: "" }));
+                    }
+                  }}
                   placeholder="Your Last Name"
+                  className={errors.lastName ? "inputError" : ""}
                 />
+                {errors.lastName && (
+                  <span className="errorText">{errors.lastName}</span>
+                )}
               </div>
             </motion.div>
 
@@ -170,18 +251,34 @@ export default function ContactUs() {
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) {
+                    setErrors((prev) => ({ ...prev, email: "" }));
+                  }
+                }}
                 placeholder="FirstLast@gmail.com"
+                className={errors.email ? "inputError" : ""}
               />
+              {errors.email && <span className="errorText">{errors.email}</span>}
             </motion.div>
 
             <motion.div className="fullInput" variants={fieldVariants}>
               <label>Message</label>
               <textarea
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                  if (errors.message) {
+                    setErrors((prev) => ({ ...prev, message: "" }));
+                  }
+                }}
                 placeholder="Hi! I love your game!"
+                className={errors.message ? "inputError" : ""}
               />
+              {errors.message && (
+                <span className="errorText">{errors.message}</span>
+              )}
             </motion.div>
 
             <motion.button
