@@ -6,6 +6,7 @@ import { supabase } from "../../lib/supabase";
 import CreateLogModal from "@/components/CreateLogModal";
 import AuthModal from "@/components/AuthModal";
 import ForestLogViewModal from "@/components/ForestLogViewModal";
+import EditLogModal from "@/components/EditLogModal";
 
 type Log = {
   id: string;
@@ -101,6 +102,7 @@ export default function ForestLog() {
   const [showCreateLog, setShowCreateLog] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [selectedLog, setSelectedLog] = useState<Log | null>(null);
+  const [selectedEditLog, setSelectedEditLog] = useState<Log | null>(null);
 
   const addNewLog = (newLog: Log) => {
     setLogs((prev) => [newLog, ...prev]);
@@ -109,6 +111,7 @@ export default function ForestLog() {
   const removeLog = (id: string) => {
     setLogs((prev) => prev.filter((log) => log.id !== id));
     setSelectedLog(null);
+    setSelectedEditLog(null);
   };
 
   useEffect(() => {
@@ -307,6 +310,34 @@ export default function ForestLog() {
             log={selectedLog}
             onClose={() => setSelectedLog(null)}
             onDeleted={removeLog}
+            onEdit={(log) => {
+              setSelectedLog(null);
+              setSelectedEditLog(log);
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {selectedEditLog && (
+          <EditLogModal
+            logId={selectedEditLog.id}
+            onClose={() => setSelectedEditLog(null)}
+            onUpdated={(updatedLog) => {
+              setLogs((prev) =>
+                prev.map((log) =>
+                  log.id === updatedLog.id
+                    ? {
+                        ...log,
+                        title: updatedLog.title,
+                        content: updatedLog.content,
+                        category: updatedLog.category,
+                      }
+                    : log
+                )
+              );
+              setSelectedEditLog(null);
+            }}
           />
         )}
       </AnimatePresence>

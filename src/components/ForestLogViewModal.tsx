@@ -18,6 +18,7 @@ type Props = {
   log: Log;
   onClose: () => void;
   onDeleted: (id: string) => void;
+  onEdit: (log: Log) => void;
 };
 
 const overlayVariants: Variants = {
@@ -61,6 +62,7 @@ export default function ForestLogViewModal({
   log,
   onClose,
   onDeleted,
+  onEdit,
 }: Props) {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
@@ -145,7 +147,7 @@ export default function ForestLogViewModal({
               <>
                 <button
                   className="editBtn"
-                  onClick={() => router.push(`/forest-log/edit/${log.id}`)}
+                  onClick={() => onEdit(log)}
                   type="button"
                 >
                   Edit
@@ -165,7 +167,10 @@ export default function ForestLogViewModal({
       </motion.div>
 
       {showDeleteModal && (
-        <div className="deleteModalOverlay" onClick={() => setShowDeleteModal(false)}>
+        <div
+          className="deleteModalOverlay"
+          onClick={() => setShowDeleteModal(false)}
+        >
           <div className="deleteModal" onClick={(e) => e.stopPropagation()}>
             <h2>Delete Log?</h2>
             <p>This action cannot be undone.</p>

@@ -2424,6 +2424,44 @@ textarea {
 }
 
 /* =========================
+   EDIT MODAL OVERLAY
+========================= */
+
+.editLogModalCard {
+  width: min(92vw, 900px);
+}
+
+.forestLogModalScroll {
+  max-height: calc(85vh - 210px);
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.inputError {
+  border: 2px solid #ff4d4f !important;
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.12);
+}
+
+.errorText {
+  display: block;
+  margin-top: 6px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.formErrorBox {
+  background: rgba(255, 107, 107, 0.12);
+  border: 1px solid #ff6b6b;
+  color: #ff6b6b;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* =========================
    MODAL OVERLAY (NEW)
 ========================= */
 
