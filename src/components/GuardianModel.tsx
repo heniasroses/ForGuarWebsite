@@ -104,14 +104,18 @@ export default function GuardianModel({
         </Suspense>
 
         <OrbitControls
-  enableZoom={false}
-  enablePan={false}
-  autoRotate={false}
-  minPolarAngle={Math.PI / 2}
-  maxPolarAngle={Math.PI / 2}
-  enableRotate={true}
-  rotateSpeed={1}
-/>
+          enableZoom={false}
+          enablePan={false}
+
+          autoRotate
+          autoRotateSpeed={1}
+
+          enableRotate={true}
+          rotateSpeed={0.8}
+
+          minPolarAngle={Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
+        />
       </Canvas>
     </div>
   );
