@@ -41,7 +41,7 @@ useEffect(() => {
   // ANIMATION FIX
   // =========================
   if (animations && animations.length > 0) {
-    const idle = animations.find((a) => a.name === "WebsiteIDLE");
+    const idle = animations.find((a) => a.name === "WebsiteIDLE" || a.name === "MariIDLE");
 
     if (!idle) return;
 
