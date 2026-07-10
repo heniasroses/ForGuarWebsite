@@ -8,6 +8,13 @@ type Props = {
   onLogCreated: (log: any) => void;
 };
 
+type Errors = {
+  title: string;
+  categoryId: string;
+  content: string;
+  form: string;
+};
+
 export default function CreateLogModal({ onClose, onLogCreated }: Props) {
   const [user, setUser] = useState<any>(null);
 
@@ -18,8 +25,16 @@ export default function CreateLogModal({ onClose, onLogCreated }: Props) {
   const [categories, setCategories] = useState<any[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [username, setUsername] = useState("Unknown");
+  const [loading, setLoading] = useState(false);
 
-  // GET USER (safe)
+  const [errors, setErrors] = useState<Errors>({
+    title: "",
+    categoryId: "",
+    content: "",
+    form: "",
+  });
+
+  // GET USER + USERNAME
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -30,38 +45,22 @@ export default function CreateLogModal({ onClose, onLogCreated }: Props) {
       }
 
       setUser(data.user);
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("id", data.user.id)
+        .single();
+
+      if (profile?.username) {
+        setUsername(profile.username);
+      }
     };
 
     getUser();
   }, [onClose]);
 
   // FETCH CATEGORIES
-  useEffect(() => {
-  const getUser = async () => {
-    const { data } = await supabase.auth.getUser();
-
-    if (!data.user) {
-      onClose();
-      return;
-    }
-
-    setUser(data.user);
-
-    // ✅ GET USERNAME FROM PROFILES
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("username")
-      .eq("id", data.user.id)
-      .single();
-
-    if (profile?.username) {
-      setUsername(profile.username);
-    }
-  };
-
-  getUser();
-    }, [onClose]);
-
   useEffect(() => {
     const fetchCategories = async () => {
       setLoadingCategories(true);
@@ -86,12 +85,36 @@ export default function CreateLogModal({ onClose, onLogCreated }: Props) {
   const handleSubmit = async () => {
     if (!user) return;
 
-    if (!title || !content || !categoryId) {
-      alert("Please complete all fields.");
-      return;
+    const newErrors: Errors = {
+      title: "",
+      categoryId: "",
+      content: "",
+      form: "",
+    };
+
+    let hasError = false;
+
+    if (!title.trim()) {
+      newErrors.title = "Title is required.";
+      hasError = true;
     }
 
-    // ✅ SIMPLE INSERT ONLY (no joins, no second fetch)
+    if (!categoryId) {
+      newErrors.categoryId = "Please select a category.";
+      hasError = true;
+    }
+
+    if (!content.trim()) {
+      newErrors.content = "Content cannot be empty.";
+      hasError = true;
+    }
+
+    setErrors(newErrors);
+
+    if (hasError) return;
+
+    setLoading(true);
+
     const { data, error } = await supabase
       .from("forest_logs")
       .insert({
@@ -107,14 +130,15 @@ export default function CreateLogModal({ onClose, onLogCreated }: Props) {
 
     if (error || !data) {
       console.log(error);
-      alert("Failed to create log.");
+      setErrors((prev) => ({
+        ...prev,
+        form: "Failed to create log.",
+      }));
+      setLoading(false);
       return;
     }
 
-    // find category name locally (SAFE)
-    const selectedCategory = categories.find(
-      (c) => c.id === categoryId
-    );
+    const selectedCategory = categories.find((c) => c.id === categoryId);
 
     const formattedLog = {
       id: data.id,
@@ -125,23 +149,32 @@ export default function CreateLogModal({ onClose, onLogCreated }: Props) {
     };
 
     onLogCreated(formattedLog);
+    setLoading(false);
     onClose();
   };
 
   return (
     <div className="createLogOverlay" onClick={onClose}>
       <div className="createLogCard" onClick={(e) => e.stopPropagation()}>
-
         <h1>Create a Log</h1>
+
+        {errors.form && <div className="formErrorBox">{errors.form}</div>}
 
         {/* TITLE */}
         <div className="field">
           <label>Title</label>
           <input
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (errors.title) {
+                setErrors((prev) => ({ ...prev, title: "" }));
+              }
+            }}
             placeholder="Enter title"
+            className={errors.title ? "inputError" : ""}
           />
+          {errors.title && <span className="errorText">{errors.title}</span>}
         </div>
 
         {/* CATEGORY */}
@@ -151,19 +184,30 @@ export default function CreateLogModal({ onClose, onLogCreated }: Props) {
           {loadingCategories ? (
             <p style={{ color: "#aaa" }}>Loading categories...</p>
           ) : (
-            <div className="categoryRow">
-              {categories.map((cat) => (
-                <label key={cat.id}>
-                  <input
-                    type="radio"
-                    name="category"
-                    checked={categoryId === cat.id}
-                    onChange={() => setCategoryId(cat.id)}
-                  />
-                  {cat.name}
-                </label>
-              ))}
-            </div>
+            <>
+              <div className="categoryRow">
+                {categories.map((cat) => (
+                  <label key={cat.id}>
+                    <input
+                      type="radio"
+                      name="category"
+                      checked={categoryId === cat.id}
+                      onChange={() => {
+                        setCategoryId(cat.id);
+                        if (errors.categoryId) {
+                          setErrors((prev) => ({ ...prev, categoryId: "" }));
+                        }
+                      }}
+                    />
+                    {cat.name}
+                  </label>
+                ))}
+              </div>
+
+              {errors.categoryId && (
+                <span className="errorText">{errors.categoryId}</span>
+              )}
+            </>
           )}
         </div>
 
@@ -172,22 +216,33 @@ export default function CreateLogModal({ onClose, onLogCreated }: Props) {
           <label>Content</label>
           <textarea
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => {
+              setContent(e.target.value);
+              if (errors.content) {
+                setErrors((prev) => ({ ...prev, content: "" }));
+              }
+            }}
             placeholder="Write your log..."
+            className={errors.content ? "inputError" : ""}
           />
+          {errors.content && <span className="errorText">{errors.content}</span>}
         </div>
 
         {/* BUTTONS */}
         <div className="buttonColumn">
-          <button className="cancelBtn" onClick={onClose}>
+          <button className="cancelBtn" onClick={onClose} type="button">
             Cancel
           </button>
 
-          <button className="submitBtn" onClick={handleSubmit}>
-            Submit
+          <button
+            className="submitBtn"
+            onClick={handleSubmit}
+            type="button"
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Submit"}
           </button>
         </div>
-
       </div>
     </div>
   );

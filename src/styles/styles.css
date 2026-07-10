@@ -1697,19 +1697,6 @@ textarea {
   cursor: pointer;
 }
 
-.inputError {
-  border: 2px solid #ff4d4f !important;
-  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.12);
-}
-
-.errorText {
-  display: block;
-  margin-top: 6px;
-  color: #ff6b6b;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
 .formSuccess {
   background: rgba(129, 226, 94, 0.12);
   border: 1px solid #81e25e;
@@ -2338,7 +2325,7 @@ textarea {
   display: flex;
   flex-direction: column;
 
-  margin-bottom: 18px;
+  margin-bottom: 6px;
 }
 
 .field label {
