@@ -2282,6 +2282,148 @@ textarea {
 }
 
 /* =========================
+   VIEW MODAL OVERLAY
+========================= */
+
+.forestLogModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.forestLogModalCard {
+  width: min(92vw, 900px);
+  max-height: 85vh;
+  background: #2e322e;
+  border-radius: 20px;
+  padding: 30px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+}
+
+.forestLogModalHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.forestLogModalHeader h1 {
+  color: #90ff67;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.modalCloseBtn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.forestLogModalBody {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.forestLogModalScroll {
+  max-height: calc(85vh - 210px);
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.forestLogModalScroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.forestLogModalScroll::-webkit-scrollbar-thumb {
+  background: rgba(144, 255, 103, 0.45);
+  border-radius: 999px;
+}
+
+.forestLogModalContent {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  color: white;
+  word-break: break-word;
+}
+
+.modalActions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.deleteModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.deleteModal {
+  background: #2e322e;
+  padding: 30px;
+  border-radius: 20px;
+  width: min(90vw, 420px);
+  text-align: center;
+  color: white;
+}
+
+.deleteModal h2 {
+  color: #90ff67;
+  margin-bottom: 10px;
+}
+
+.deleteModal p {
+  margin-bottom: 20px;
+  color: #d5d5d5;
+}
+
+.deleteModalActions {
+  display: flex;
+  gap: 10px;
+}
+
+.cancelDeleteBtn,
+.confirmDeleteBtn {
+  flex: 1;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancelDeleteBtn {
+  background: #90ff67;
+  color: black;
+}
+
+.confirmDeleteBtn {
+  background: #a12b2b;
+  color: white;
+}
+
+/* =========================
    MODAL OVERLAY (NEW)
 ========================= */
 

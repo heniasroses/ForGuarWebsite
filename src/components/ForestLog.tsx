@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion, type Variants } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { supabase } from "../../lib/supabase";
 import CreateLogModal from "@/components/CreateLogModal";
 import AuthModal from "@/components/AuthModal";
+import ForestLogViewModal from "@/components/ForestLogViewModal";
 
 type Log = {
   id: string;
@@ -13,6 +13,7 @@ type Log = {
   content: string;
   username: string;
   category: string;
+  user_id: string;
 };
 
 type Category = {
@@ -99,9 +100,15 @@ export default function ForestLog() {
 
   const [showCreateLog, setShowCreateLog] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [selectedLog, setSelectedLog] = useState<Log | null>(null);
 
   const addNewLog = (newLog: Log) => {
     setLogs((prev) => [newLog, ...prev]);
+  };
+
+  const removeLog = (id: string) => {
+    setLogs((prev) => prev.filter((log) => log.id !== id));
+    setSelectedLog(null);
   };
 
   useEffect(() => {
@@ -114,20 +121,15 @@ export default function ForestLog() {
     };
   }, []);
 
-  // FETCH CATEGORIES
   useEffect(() => {
     const fetchCategories = async () => {
-      const { data } = await supabase
-        .from("forest_log_categories")
-        .select("*");
-
+      const { data } = await supabase.from("forest_log_categories").select("*");
       setCategories(data || []);
     };
 
     fetchCategories();
   }, []);
 
-  // FETCH LOGS
   useEffect(() => {
     const fetchLogs = async () => {
       setLoading(true);
@@ -157,6 +159,7 @@ export default function ForestLog() {
         id: log.id,
         title: log.title,
         content: log.content,
+        user_id: log.user_id,
         username: log.profiles?.username || "Unknown",
         category: log.forest_log_categories?.name || "Uncategorized",
       }));
@@ -188,7 +191,6 @@ export default function ForestLog() {
 
   return (
     <div className="container-fluid forestLogContainer">
-      {/* HERO */}
       <motion.section
         className="forestLogHero"
         initial="hidden"
@@ -201,7 +203,6 @@ export default function ForestLog() {
         </motion.div>
       </motion.section>
 
-      {/* CONTENT */}
       <motion.section
         className="forestLogContent"
         initial="hidden"
@@ -209,7 +210,6 @@ export default function ForestLog() {
         viewport={{ once: true, amount: 0.15 }}
         variants={contentVariants}
       >
-        {/* FILTERS */}
         <motion.div className="forestLogFilters" variants={filterRowVariants}>
           <div className="leftFilters">
             <motion.button
@@ -248,7 +248,6 @@ export default function ForestLog() {
           </motion.button>
         </motion.div>
 
-        {/* CONTENT STATES */}
         {loading ? (
           <motion.p
             style={{ color: "white" }}
@@ -290,16 +289,28 @@ export default function ForestLog() {
 
                 <p className="content">{log.content}</p>
 
-                <Link href={`/forest-log/${log.id}`}>
-                  <button className="viewLogButton">View Log</button>
-                </Link>
+                <button
+                  className="viewLogButton"
+                  onClick={() => setSelectedLog(log)}
+                >
+                  View Log
+                </button>
               </motion.div>
             ))}
           </motion.div>
         )}
       </motion.section>
 
-      {/* MODALS */}
+      <AnimatePresence>
+        {selectedLog && (
+          <ForestLogViewModal
+            log={selectedLog}
+            onClose={() => setSelectedLog(null)}
+            onDeleted={removeLog}
+          />
+        )}
+      </AnimatePresence>
+
       {showCreateLog && (
         <CreateLogModal
           onClose={() => setShowCreateLog(false)}
