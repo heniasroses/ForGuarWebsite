@@ -30,6 +30,16 @@ const EMPTY_ENTRY: WildlifeEntry = {
   mainImage_url: "",
 };
 
+const generateSlug = (text: string) => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+};
+
 export default function AdminAlmanac() {
   const router = useRouter();
   const pathname = usePathname();
@@ -160,9 +170,16 @@ export default function AdminAlmanac() {
     }
 
     if (modalMode === "create") {
+      const slug = generateSlug(payload.common_name);
+
       const { error } = await supabase
         .from("wildlife_entries")
-        .insert([payload]);
+        .insert([
+          {
+            ...payload,
+            slug,
+          },
+        ]);
 
       if (error) {
         console.log("CREATE ERROR:", error);
