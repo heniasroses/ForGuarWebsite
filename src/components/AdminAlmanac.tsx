@@ -11,7 +11,7 @@ type WildlifeEntry = {
   common_name: string;
   scientific_name: string;
   habitat: string;
-  population: string | number | null;
+  population: string;
   conservation_status: string;
   description: string;
   mainImage_url: string | null;
@@ -44,6 +44,25 @@ export default function AdminAlmanac() {
   const [modalMode, setModalMode] = useState<ModalMode>("edit");
   const [saving, setSaving] = useState(false);
 
+  const fetchEntries = async (): Promise<WildlifeEntry[]> => {
+    const { data, error } = await supabase
+      .from("wildlife_entries")
+      .select("*")
+      .order("common_name", { ascending: true });
+
+    if (error) {
+      console.log("FETCH ERROR:", error);
+      return [];
+    }
+
+    return (data || []) as WildlifeEntry[];
+  };
+
+  const refreshEntries = async () => {
+    const freshEntries = await fetchEntries();
+    setEntries(freshEntries);
+  };
+
   useEffect(() => {
     const init = async () => {
       setLoading(true);
@@ -57,29 +76,25 @@ export default function AdminAlmanac() {
         return;
       }
 
-      const { data: profile } = await supabase
+      const { data: profile, error: profileError } = await supabase
         .from("profiles")
         .select("role")
         .eq("id", user.id)
         .single();
+
+      if (profileError) {
+        console.log("PROFILE ERROR:", profileError);
+        router.push("/");
+        return;
+      }
 
       if (profile?.role !== "admin") {
         router.push("/");
         return;
       }
 
-      const { data, error } = await supabase
-        .from("wildlife_entries")
-        .select("*")
-        .order("common_name", { ascending: true });
-
-      if (error) {
-        console.log(error);
-        setLoading(false);
-        return;
-      }
-
-      setEntries((data || []) as WildlifeEntry[]);
+      const freshEntries = await fetchEntries();
+      setEntries(freshEntries);
       setLoading(false);
     };
 
@@ -96,11 +111,12 @@ export default function AdminAlmanac() {
       .eq("id", id);
 
     if (error) {
-      alert("Delete failed");
+      console.log("DELETE ERROR:", error);
+      alert(error.message || "Delete failed");
       return;
     }
 
-    setEntries((prev) => prev.filter((entry) => entry.id !== id));
+    await refreshEntries();
   };
 
   const openEditModal = (entry: WildlifeEntry) => {
@@ -126,63 +142,61 @@ export default function AdminAlmanac() {
     setSaving(true);
 
     const payload = {
-      common_name: selectedEntry.common_name,
-      scientific_name: selectedEntry.scientific_name,
-      habitat: selectedEntry.habitat,
-      population:
-        selectedEntry.population === "" ? null : selectedEntry.population,
-      conservation_status: selectedEntry.conservation_status,
-      description: selectedEntry.description,
+      common_name: selectedEntry.common_name.trim(),
+      scientific_name: selectedEntry.scientific_name.trim(),
+      habitat: selectedEntry.habitat.trim(),
+      population: selectedEntry.population.trim() || null,
+      conservation_status: selectedEntry.conservation_status.trim(),
+      description: selectedEntry.description.trim(),
       mainImage_url: selectedEntry.mainImage_url?.trim()
-        ? selectedEntry.mainImage_url
+        ? selectedEntry.mainImage_url.trim()
         : null,
     };
 
+    if (!payload.common_name || !payload.scientific_name) {
+      alert("Common Name and Scientific Name are required.");
+      setSaving(false);
+      return;
+    }
+
     if (modalMode === "create") {
-      const { error, data } = await supabase
+      const { error } = await supabase
         .from("wildlife_entries")
-        .insert([payload])
-        .select()
-        .single();
+        .insert([payload]);
 
       if (error) {
-        alert("Create failed");
+        console.log("CREATE ERROR:", error);
+        alert(error.message || "Create failed");
         setSaving(false);
         return;
       }
 
-      setEntries((prev) => [data as WildlifeEntry, ...prev]);
+      await refreshEntries();
       setSaving(false);
       closeModal();
       return;
     }
 
-    const { error, data } = await supabase
+    const { error } = await supabase
       .from("wildlife_entries")
       .update(payload)
-      .eq("id", selectedEntry.id)
-      .select()
-      .single();
+      .eq("id", selectedEntry.id);
 
     if (error) {
-      alert("Update failed");
+      console.log("UPDATE ERROR:", error);
+      alert(error.message || "Update failed");
       setSaving(false);
       return;
     }
 
-    setEntries((prev) =>
-      prev.map((entry) =>
-        entry.id === selectedEntry.id ? (data as WildlifeEntry) : entry
-      )
-    );
-
+    await refreshEntries();
     setSaving(false);
     closeModal();
   };
 
   const statusOptions = useMemo(() => {
-    return Array.from(new Set(entries.map((e) => e.conservation_status))).filter(
-      Boolean
+    return Array.from(
+      new Set(entries.map((e) => e.conservation_status).filter(Boolean))
     );
   }, [entries]);
 
@@ -234,52 +248,43 @@ export default function AdminAlmanac() {
 
         <div className="adminMain adminAlmanac">
           <div className={styles.filterSection}>
-
             <div className={styles.filterTop}>
-
-                <input
+              <input
                 type="text"
                 placeholder="Search wildlife..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className={styles.searchInput}
-                />
+              />
 
-                <button
-                onClick={openCreateModal}
-                className={styles.createButton}
-                >
+              <button onClick={openCreateModal} className={styles.createButton}>
                 + Create Entry
-                </button>
-
+              </button>
             </div>
 
             <div className={styles.filterBottom}>
-
-                <button
+              <button
                 className={`ForGuarButtons ${
-                    filter === "all" ? "activeFilterAdmin" : ""
+                  filter === "all" ? "activeFilterAdmin" : ""
                 }`}
                 onClick={() => setFilter("all")}
-                >
+              >
                 All Statuses
-                </button>
+              </button>
 
-                {statusOptions.map((status) => (
+              {statusOptions.map((status) => (
                 <button
-                    key={status}
-                    className={`ForGuarButtons ${
+                  key={status}
+                  className={`ForGuarButtons ${
                     filter === status ? "activeFilterAdmin" : ""
-                    }`}
-                    onClick={() => setFilter(status)}
+                  }`}
+                  onClick={() => setFilter(status)}
                 >
-                    {status}
+                  {status}
                 </button>
-                ))}
-
+              ))}
             </div>
-
-            </div>
+          </div>
 
           {loading ? (
             <p style={{ color: "white" }}>Loading...</p>
@@ -306,7 +311,7 @@ export default function AdminAlmanac() {
                       className="viewBtn"
                       onClick={() => openEditModal(entry)}
                     >
-                        Edit
+                      Edit
                     </button>
 
                     <button
@@ -388,7 +393,7 @@ export default function AdminAlmanac() {
                 <span>Population</span>
                 <input
                   type="text"
-                  value={selectedEntry.population ?? ""}
+                  value={selectedEntry.population}
                   onChange={(e) =>
                     setSelectedEntry({
                       ...selectedEntry,
