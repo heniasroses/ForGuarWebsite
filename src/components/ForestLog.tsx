@@ -104,8 +104,54 @@ export default function ForestLog() {
   const [selectedLog, setSelectedLog] = useState<Log | null>(null);
   const [selectedEditLog, setSelectedEditLog] = useState<Log | null>(null);
 
-  const addNewLog = (newLog: Log) => {
-    setLogs((prev) => [newLog, ...prev]);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [authReady, setAuthReady] = useState(false);
+
+  const fetchLogs = async () => {
+    setLoading(true);
+
+    const { data, error } = await supabase
+      .from("forest_logs")
+      .select(
+        `
+        id,
+        title,
+        content,
+        user_id,
+        category_id,
+        profiles:user_id (username),
+        forest_log_categories:category_id (name)
+        `
+      )
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.log("FETCH ERROR:", error);
+      setLoading(false);
+      return;
+    }
+
+    const formatted: Log[] = (data || []).map((log: any) => ({
+      id: log.id,
+      title: log.title,
+      content: log.content,
+      user_id: log.user_id,
+      username: log.profiles?.username || "Unknown",
+      category: log.forest_log_categories?.name || "Uncategorized",
+    }));
+
+    setLogs(formatted);
+    setLoading(false);
+  };
+
+  const fetchCategories = async () => {
+    const { data } = await supabase.from("forest_log_categories").select("*");
+    setCategories(data || []);
+  };
+
+  const addNewLog = async () => {
+    // safest fix: reload from database so user_id is guaranteed to exist
+    await fetchLogs();
   };
 
   const removeLog = (id: string) => {
@@ -115,9 +161,20 @@ export default function ForestLog() {
   };
 
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange(() => {
-      // keep UI stable; no action needed here
-    });
+    const syncAuth = async () => {
+      const { data } = await supabase.auth.getSession();
+      setCurrentUserId(data.session?.user?.id ?? null);
+      setAuthReady(true);
+    };
+
+    syncAuth();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setCurrentUserId(session?.user?.id ?? null);
+        setAuthReady(true);
+      }
+    );
 
     return () => {
       listener.subscription.unsubscribe();
@@ -125,52 +182,7 @@ export default function ForestLog() {
   }, []);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const { data } = await supabase.from("forest_log_categories").select("*");
-      setCategories(data || []);
-    };
-
     fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    const fetchLogs = async () => {
-      setLoading(true);
-
-      const { data, error } = await supabase
-        .from("forest_logs")
-        .select(
-          `
-          id,
-          title,
-          content,
-          user_id,
-          category_id,
-          profiles:user_id (username),
-          forest_log_categories:category_id (name)
-          `
-        )
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        console.log("FETCH ERROR:", error);
-        setLoading(false);
-        return;
-      }
-
-      const formatted = (data || []).map((log: any) => ({
-        id: log.id,
-        title: log.title,
-        content: log.content,
-        user_id: log.user_id,
-        username: log.profiles?.username || "Unknown",
-        category: log.forest_log_categories?.name || "Uncategorized",
-      }));
-
-      setLogs(formatted);
-      setLoading(false);
-    };
-
     fetchLogs();
   }, []);
 
@@ -308,6 +320,8 @@ export default function ForestLog() {
         {selectedLog && (
           <ForestLogViewModal
             log={selectedLog}
+            currentUserId={currentUserId}
+            authReady={authReady}
             onClose={() => setSelectedLog(null)}
             onDeleted={removeLog}
             onEdit={(log) => {
@@ -345,7 +359,10 @@ export default function ForestLog() {
       {showCreateLog && (
         <CreateLogModal
           onClose={() => setShowCreateLog(false)}
-          onLogCreated={addNewLog}
+          onLogCreated={async () => {
+            setShowCreateLog(false);
+            await fetchLogs();
+          }}
         />
       )}
 

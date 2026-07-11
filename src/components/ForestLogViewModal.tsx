@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
 type Log = {
@@ -16,6 +15,8 @@ type Log = {
 
 type Props = {
   log: Log;
+  currentUserId: string | null;
+  authReady: boolean;
   onClose: () => void;
   onDeleted: (id: string) => void;
   onEdit: (log: Log) => void;
@@ -60,25 +61,16 @@ const cardVariants: Variants = {
 
 export default function ForestLogViewModal({
   log,
+  currentUserId,
+  authReady,
   onClose,
   onDeleted,
   onEdit,
 }: Props) {
-  const router = useRouter();
-  const [user, setUser] = useState<any>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data.user);
-    };
-
-    getUser();
-  }, []);
-
-  const isOwner = log.user_id === user?.id;
+  const isOwner = authReady && currentUserId === log.user_id;
 
   const handleDelete = async () => {
     setDeleteLoading(true);
@@ -143,7 +135,11 @@ export default function ForestLogViewModal({
               Back
             </button>
 
-            {isOwner && (
+            {!authReady ? (
+              <p style={{ color: "#cfcfcf", marginTop: "12px" }}>
+                Checking permissions...
+              </p>
+            ) : isOwner ? (
               <>
                 <button
                   className="editBtn"
@@ -161,7 +157,7 @@ export default function ForestLogViewModal({
                   Delete
                 </button>
               </>
-            )}
+            ) : null}
           </div>
         </motion.div>
       </motion.div>
