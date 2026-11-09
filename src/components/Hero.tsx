@@ -61,7 +61,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.a
-          href="https://drive.google.com/uc?export=download&id=1iM3DU02rxqgy3aQ-byNRwbFuXPJKFHcI"
+          href="https://drive.google.com/file/d/1_VHibcBRi-S5slsplc9OIZF6uvEVZJbG/view?usp=sharing"
           className="btn play-btn"
           variants={button}
           whileHover={{ scale: 1.05 }}
